@@ -1,0 +1,96 @@
+#discount {
+    width: 100%;
+    height: auto;
+    background: #2193b0;  /* fallback for old browsers */
+    background: -webkit-radial-gradient(#6dd5ed, #2193b0);  /* Chrome 10-25, Safari 5.1-6 */
+    background: radial-gradient(#6dd5ed, #2193b0); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    text-align: center;
+    padding-bottom: 2rem;
+}
+
+#discount .advert-header {
+    background-color: #ffa500; 
+    /* color: #2193b0; */
+    color: #fff;
+    font-size: 2rem;
+    font-weight: lighter;
+    padding: 1rem;
+    text-transform: uppercase;
+    -webkit-text-shadow: 0px 0px 5px #2193b0;
+     text-shadow: 0px 0px 5px #2193b0;
+}
+
+#discount .advert-header span {
+    color: #2193b0;
+    font-weight: bold;
+    font-size: $md;
+}
+
+#advert-content {
+    color: #fff;
+    z-index: 99;
+}
+
+#advert-content .row {
+    margin-bottom: 0;
+}
+
+#advert-content h3 {
+    font-weight: lighter;
+    font-family: $quicksand;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+#advert-content h3 span {
+    font-weight: bold;
+}
+
+#advert-content p {
+    color: #f2f2f2;
+    font-size: 2rem;
+    font-weight: lighter;
+
+}
+
+#advert-content p span {
+    color: #ffa500;
+    font-size: 4rem;
+    font-weight: bold;
+    -webkit-text-shadow: 3px 3px 5px #333;
+     text-shadow: 3px 3px 5px #333;
+}
+
+#advert-content p span span {
+    font-size: 3rem;
+}
+
+#advert-content button {
+    background-color: #ffa500;
+    color: #f2f2f2;
+    font-family: $quicksand;
+    width: 80%;
+    height: 100%;
+    margin-top: 40%;
+    padding: 0.5rem;
+}
+
+#advert-content button:hover {
+    background-color: #de9000;
+}
+
+#about {
+    background-color: #fff;
+    -webkit-box-shadow: 5px 2px 5px #c5c5c5;
+     box-shadow: 5px 2px 5px #c5c5c5;
+    font-family: $quicksand;
+    font-size: 1.3rem;
+    padding: 25px 50px;
+}
+
+@media (max-width: 480px) {
+    #advert-content button {
+        margin-top: 0 !important;
+        margin-bottom: 50px;
+    }
+}

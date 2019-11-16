@@ -1,0 +1,41 @@
+#advert {
+    font-family: $quicksand;
+    margin-top: $lg;
+    margin-bottom: $lg;
+
+    .advert-header {
+        text-align: center;
+    }
+    
+    .advert-header a:hover {
+        text-decoration: underline;
+    }
+    
+    .advert-header h5 {
+        color: $orange;
+    }
+    
+    .advert-item {
+        background-size: cover;
+        background-position: center;
+        cursor: pointer;
+        height: 400px;
+        transition: .5s linear all;
+    }
+    
+    .advert-item:hover {
+         transform: scale(0.9);
+    }
+    
+    .advert-item1 {
+        background-image: url(../../assets/img/phone.png);
+    }
+    
+    .advert-item2 {
+        background-image: url(../../assets/img/books1.jpg);
+    }
+    
+    .advert-item3 {
+        background-image: url(../../assets/img/cloth.jpg);
+    }
+}

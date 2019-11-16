@@ -1,31 +1,46 @@
 {
   "name": "zubismart-v2",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
-    "react-scripts": "3.1.1"
-  },
+  "version": "2.0.0",
+  "description": "Zubismart is an e-commerce web application developed with Nodejs materializecssn React, express and mongoDB.",
+  "main": "server.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "client": "npm run start --prefix client",
+    "client-install": "npm install --prefix client",
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
+    "test": "SET \"NODE_ENV=test\" && mocha tests/**/*.test.js",
+    "test-watch": "nodemon --exec \"npm test\""
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "keywords": [
+    "Nodejs",
+    "JavaScript",
+    "WebDevelopment",
+    "React",
+    "Redux",
+    "MongoDB"
+  ],
+  "author": "Uzoanya Dominic",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^1.19.2"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "concurrently": "^4.1.2",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.1.6-alpha.5",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.24.0",
+    "mongoose": "^5.7.0",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "validator": "^11.1.0"
+  },
+  "engines": {
+    "node": "v12.13.0",
+    "npm": "6.9.1-next.0",
+    "yarn": "1.19.1"
   }
 }
