@@ -8,6 +8,7 @@ import Parallax1 from './Parallax1';
 import Parallax2 from './Parallax2';
 import Discount from './Discount';
 
+
 const Home = () => (
     <>
         <Helmet><title>Home - Zubismart</title></Helmet>

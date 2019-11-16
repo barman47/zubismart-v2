@@ -20,11 +20,12 @@ mongoose.connect(database_URI, { useNewUrlParser: true, useFindAndModify: false,
     .then(() => console.log('Database Connected!'))
     .catch(err => console.log(err));
 
-// Passport middleware
-app.use(passport.initialize());
 
 // Passport config
-require('./config/passport')
+require('./config/passport');
+
+// Passport middleware
+app.use(passport.initialize());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
