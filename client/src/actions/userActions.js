@@ -59,35 +59,21 @@ export const loginUser = (user) => (dispatch) => {
         });
 };
 
-export const registerUser = (user) => (dispatch) => {
+export const registerUser = (user) => (dispatch, history) => {
     axios.post('/api/users/register', user)
         .then(res => {
             dispatch({
                 type: CLEAR_ERRORS,
                 payload: {}
             });
+            history.push('/account/login');
         })
         .catch(err => {
-            console.log(err);
-            switch (err.response.status) {
-                case 500:
-                    const error = {
-                        message: 'Please check your internet connection',
-                        status: 500
-                    };
-                    dispatch({
-                        type: GET_ERRORS,
-                        payload: error
-                    });
-                    break;
-
-                default:
-                    dispatch({
-                        type: GET_ERRORS,
-                        payload: err.response.data
-                    });
-                    break;
-            }
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            });
+            
         });
 };
 

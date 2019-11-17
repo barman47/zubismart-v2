@@ -1,113 +1,72 @@
-.signup-container {
-    background-image: url('../../assets/img/cube.jpg');
-    background-position: center;
-    background-size: cover;
-    width: 100vw;
-    height: 160%;
-    position: absolute;
-    top: 0;
-    z-index: -1;
+.register {
+    font-family: $quicksand;
 
-    .form-container {
-        background: transparent;
-        width: 100%;
-        height: 100%;
-    }
-
-    .input-container{
-        margin-top: 10rem;
-    }
-
-    form {
-        background-color: #fff;
-        padding-left: $lg;
-        padding-right: $lg;
-        padding-bottom: lg;
-        float: right;
+    .register-form {
+        background-color: $off-white;
+        border-radius: $radius;
+        margin: $lg auto;
         width: 40%;
-        height: 100%;
+        padding: $xs $normal $sm $normal;
     }
 
-    form input {
-        font-family: $quicksand !important;
-    }
-
-    form h3 {
-        background: linear-gradient(to right, $blue, darken($blue, 30%));
-        color: $off-white;
-        margin-top: 0;
+    .register-form h3 {
+        color: $off-black;
+        border-bottom: 1px solid darken($off-white, 15%);
+        font-size: $md;
+        padding-bottom: $sm;
         text-align: center;
-        padding-top: $md;
-        padding-bottom: $md;
-        position: absolute;
-        right: 0;
-        width: 40%;
     }
 
-    form .signupButton {
-        background-color: $red;
+    button {
         border: none;
-        border-radius: $button-radius;
-        box-shadow: $shadow;
-        color: #fff;
+        border-radius: $radius;
+        color: $off-white;
         cursor: pointer;
-        padding: $normal $xlg;
-        text-align: center;
-        transition: 0.3s linear all;
+        font-family: $quicksand;
+        padding: $normal 0;
         width: 100%;
+        transition: 0.3s linear all;
     }
 
-    form .signupButton:hover {
-        background-color: darken($red, 10%);
-        box-shadow: none;
+    button[type=submit] {
+        background-color: $orange;
     }
-
-    form .signupButton:focus {
-        outline: none;
+    button[type=submit]:hover {
+        background-color: darken($orange, 5%);
+        box-shadow: $shadow;
     }
-}
-
-.button-container {
-    background-color: rgba(0, 0, 0, .4);
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    overflow: hidden;
 
     p {
-        color: $off-white;
+        text-align: center;
+    }
+
+    button.login {
+        background-color: $green;
+        margin-top: $sm;
+    }
+    button.login:hover {
+        background-color: darken($green, 5%);
+        box-shadow: $shadow;
+    }
+
+    a:hover {
+        text-decoration: underline;
     }
 }
 
-.show {
-    display: flex !important;
+@media (max-width: $lg-breakpoint) {
+    .register-form {
+        width: 70% !important;
+    }
 }
 
 @media (max-width: $md-breakpoint) {
-    .signup-container  {
-        height: 100%;
+    .register-form {
+        width: 95vw !important;
+        margin: $sm !important;
     }
 
-    .signup-container form {
-        width: 100%;
-        padding-left: $xs;
-        padding-right: $xs;
-    }
-
-    .signup-container form h3 {
-        width: 100%;
-    }
-
-    .signup-container form .row .col {
-        width: 100%;
-    }
-
-    .signup-container form p {
-        margin-bottom: $sm;
-        text-align:center;
+    .register-form h3 {
+        font-size: $sm !important;
     }
 }

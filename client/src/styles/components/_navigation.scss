@@ -1,3 +1,146 @@
-#header {
-    display: none;
+header {
+    background-color: $primary-color;
+
+    section {
+        display: grid;
+        grid-template-columns: 3fr 1fr;
+        padding: 0 $lg;
+    }
+
+    span.menu-icon {
+        display: none;
+        color: $off-white;
+    }
+
+    section div:first-child {
+        display: flex;
+        align-items: center;
+    }
+
+    section div:first-child img.logo {
+        width: 10rem;
+        height: 4rem;
+        margin-right: $xlg;
+    }
+
+    section div:first-child input[type=search] {
+        background-color: darken($off-white, 5%);
+        border-radius: 3px;
+        max-width: 100%;
+        height: 120%;
+        padding: $xs $normal;    
+        transition: 0.2s linear all;
+    }
+    section div:first-child input[type=search]::placeholder {
+        font-family: $quicksand;
+    }
+    section div:first-child input[type=search]:focus {
+        background-color: #fff;
+        border: none !important;
+        box-shadow: none !important;
+    }
+
+    .search-icon {
+        color: $off-white;
+    }
+
+    section div:first-child button {
+        background-color: $orange;
+        border: none;
+        cursor: pointer;
+        margin-left: -2rem;
+        margin-top: -0.6rem;
+        padding: 0.6rem $normal;
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+        transition: 0.2s linear all;
+    }
+    section div:first-child button:hover {
+        background-color: darken($orange, 2%);
+    }
+
+    section div:last-child {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    section div:last-child a:last-child {
+        background-color: $orange;
+        color: $off-white;
+        border-radius: 3px;
+        padding: $xs $normal;
+        transition: 0.2s linear all;
+    }
+    section div:last-child a:last-child:hover {
+        background-color: darken($orange, 2%);
+        box-shadow: $shadow;
+    }
+
+    .cart {
+        background-color: $success-text;
+        border-radius: 3px;
+        padding: 0.2rem $xs;
+    }
+
+    a.grid-item {
+        color: $off-white;
+    }
+
+    a.grid-item:hover {
+        color: darken($off-white, 5%);
+        text-decoration: underline;
+    }
+
+    nav {
+        background-color: darken($primary-color, 5%);
+        box-shadow: none;
+    }
+
+    nav .nav-wrapper {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    nav .nav-wrapper ul {
+        display: flex;
+        justify-content: space-evenly;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+@media (max-width: $lg-breakpoint) {
+    header section {
+        grid-template-columns: 1fr 0;
+    }
+
+    span.menu-icon {
+        display: block !important;
+    }
+
+    .brand-logo {
+        margin: 0 auto;
+    }
+
+    nav, .grid-item {
+        display: none !important;
+    }
+}
+
+@supports (-ms-accelerator: true) {
+    /* Edge only */
+
+    header section {
+        grid-template-columns: 3fr 1fr !important;
+    }
+
+    header section div:last-child {
+        justify-content: space-evenly !important;
+    }
+  
+    nav .nav-wrapper ul {
+      justify-content: space-around !important;
+      /* you can also add some other adjustments to size, margins etc to get the same positioning */
+    }
 }

@@ -7,6 +7,7 @@ import ScrollToTop from './components/layout/ScrollToTop';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import Home from './components/Home';
+import Register from './components/users/Register';
 
 // import PrivateRoute from './components/common/PrivateRoute'; 
 
@@ -39,6 +40,7 @@ class App extends Component {
 						<Fragment>
 							<Header />
 							<Route exact path="/" component={Home} />
+							<Route exact path="/account/register" component={Register} />
 							{/* <Switch>
 								<PrivateRoute path="/dashboard" exact component={Dashboard} />
 							</Switch> */}
