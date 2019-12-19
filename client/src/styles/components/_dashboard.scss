@@ -67,6 +67,10 @@
             padding-bottom: $normal;
         }
 
+        input {
+            font-family: $quicksand;
+        }
+
         button.save-profile {
             background-color: $green;
             border: none;

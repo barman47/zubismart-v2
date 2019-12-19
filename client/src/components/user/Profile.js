@@ -26,6 +26,11 @@ const Profile = (props) => {
         setEmail(email);
     }, []);
 
+    const handleFormSubmit = (e) => {
+        e.preventDefault();
+        alert('You no see as I dey look you?');
+    }
+
     return (
         <>
             <Helmet><title>My Zubismart Account | Zubismart.com</title></Helmet>
@@ -57,7 +62,7 @@ const Profile = (props) => {
                 </section>
                 <section className="main-content">
                     <h5>Account Information</h5>
-                    <form action="">
+                    <form onSubmit={handleFormSubmit}>
                         <ProfileTextInput 
                             label1="First name"
                             id1="firstName"
@@ -115,7 +120,6 @@ const Profile = (props) => {
                         <div className="row">
                             <button 
                                 className="save-profile"
-                                onClick={() => alert('You no see as I dey look you?')}
                             >
                                 Save Changes
                             </button>
