@@ -50,6 +50,10 @@ body {
     box-shadow: 0 1px 0 0 $blue !important;
 }
 
+.input-field input[type=text].valid + label, .input-field input[type=email].valid + label, .input-field input[type=password].valid + label {
+    color: $blue !important;
+}
+
 /* valid color */
 .input-field input[type=text].valid, .input-field input[type=email].valid, .input-field input[type=password].valid {
     border-bottom: 1px solid $success-text !important;
@@ -73,4 +77,50 @@ body {
 
 .input-field .form-input.valid::before {
     color: darken($gray, 30%) !important;
+}
+
+div.breadcrumb::before {
+    display: none;
+}
+
+.breadcrumb {
+    background-color: $off-white;
+    padding: $sm;
+
+    h2 {
+        color: $off-black;
+        margin: 0;
+    }
+
+    ul li a.active {
+        color: $primary-color !important;
+        font-weight: bold;
+    }
+
+    ul li a:link {
+        color: $off-black;
+        line-height: 1.8;
+    }
+
+    ul li a:visited {
+        color: $off-black;
+    }
+
+    ul li a:hover {
+        cursor: pointer;
+    }
+
+    ul li a:active {
+        color: $orange;
+    }
+}
+
+.breadcrumb ul li {
+    display: inline-block;
+}
+
+.breadcrumb-icon {
+    color: lighten($off-black, 65%);
+    position: relative;
+    top: -4px;
 }

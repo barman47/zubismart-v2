@@ -16,11 +16,10 @@ const Register = (props) => {
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState({});
 
+    // componentDidUpdate
     useEffect(() => {
-        if (props.errors) {
-            setErrors(props.errors);
-        }
-    });
+        setErrors(props.errors);
+    }, [props.errors]);
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
@@ -37,7 +36,7 @@ const Register = (props) => {
 
     return (
         <>
-            <Helmet><title>Register User | Zubismart</title></Helmet>
+            <Helmet><title>Register User | Zubismart.com</title></Helmet>
             <div className="register">
                 <form onSubmit={handleFormSubmit} className="register-form">
                     <h3>Create An Account</h3>
@@ -89,7 +88,7 @@ const Register = (props) => {
                     <p>By Signing up you agree to our <Link to="/terms">terms and conditions</Link></p>
                     <div className="col s12">
                         <p>Already have an account?</p>
-                        <button onClick={() => props.history.push('/account/login')} className="login">Login</button>
+                        <button onClick={() => props.history.push('/users/login')} className="login">Login</button>
                     </div>
                 </form>
             </div>

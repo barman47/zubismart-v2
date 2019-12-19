@@ -1,0 +1,1 @@
+export default (text) => text.charAt(0) + text.substring(1).toLowerCase();

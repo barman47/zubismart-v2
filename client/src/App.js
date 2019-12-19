@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import jwt_decode from 'jwt-decode';
 
@@ -7,9 +7,11 @@ import ScrollToTop from './components/layout/ScrollToTop';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import Home from './components/Home';
-import Register from './components/users/Register';
+import Login from './components/auth/Login';
+import Register from './components/auth/Register';
+import Profile from './components/user/Profile';
 
-// import PrivateRoute from './components/common/PrivateRoute'; 
+import PrivateRoute from './components/common/PrivateRoute'; 
 
 import store from './store';
 import setAuthToken from './utils/setAuthToken';
@@ -40,10 +42,11 @@ class App extends Component {
 						<Fragment>
 							<Header />
 							<Route exact path="/" component={Home} />
-							<Route exact path="/account/register" component={Register} />
-							{/* <Switch>
-								<PrivateRoute path="/dashboard" exact component={Dashboard} />
-							</Switch> */}
+							<Route exact path="/users/login" component={Login} />
+							<Route exact path="/users/register" component={Register} />
+							<Switch>
+								<PrivateRoute path="/account/profile" exact component={Profile} />
+							</Switch>
 
 							<Footer />
 						</Fragment>

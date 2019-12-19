@@ -30,22 +30,22 @@ const Footer = () => (
                 <div className="col s12 m6 l3">
                     <h5>About</h5>
                     <ul className="footer-link-list">
-                        <li><a href="#">Our Story</a></li>
-                        <li><a href="#">Maybe Something Else</a></li>
+                        <li><a href="#!">Our Story</a></li>
+                        <li><a href="#!">Maybe Something Else</a></li>
                     </ul>
                 </div>
             </div>
         </div>
         <div className="footer-copyright">
             <div id="left">
-                <p style={{ color: '#a2a2a2' }}>&copy; {new Date().getFullYear()} Copyright Zubis Mart - Developed by <span className="myLink"><a href="https://www.domstech.com" target="_blank">Barman</a></span></p>
+                <p style={{ color: '#a2a2a2' }}>&copy; {new Date().getFullYear()} Copyright Zubis Mart - Developed by <span className="myLink"><a href="https://www.domstech.com" rel="noopener noreferrer" target="_blank">Barman</a></span></p>
             </div>
             <div id="right">
                 <h5>Connect</h5>
                 <ul id="footerLink">
-                    <li className="footerLinks"><a href="https://web.facebook.com/Zubismartonline-607558123008426/" target="_blank "><i className="mdi mdi-facebook"></i></a></li>
-                    <li className="footerLinks"><a href="#!"><span className="mdi mdi-whatsapp"></span></a></li>
-                    <li className="footerLinks"><a href="#!"><span className="mdi mdi-instagram"></span></a></li>
+                    <li className="footerLinks"><a href="https://web.facebook.com/Zubismartonline-607558123008426/" rel="noopener noreferrer" target="_blank "><span className="mdi mdi-facebook"></span></a></li>
+                    <li className="footerLinks"><a href="#!"><span className="mdi mdi-whatsapp" rel="noopener noreferrer" target="_blank "></span></a></li>
+                    <li className="footerLinks"><a href="#!"><span className="mdi mdi-instagram" rel="noopener noreferrer" target="_blank "></span></a></li>
                 </ul>
             </div>
         </div>

@@ -2,9 +2,10 @@ header {
     background-color: $primary-color;
 
     section {
-        display: grid;
-        grid-template-columns: 3fr 1fr;
-        padding: 0 $lg;
+        display: flex;
+        justify-content: space-between;
+        padding-left: $md;
+        padding-right: $md;
     }
 
     span.menu-icon {
@@ -13,22 +14,23 @@ header {
     }
 
     section div:first-child {
+        width: 70vw;
         display: flex;
-        align-items: center;
     }
 
     section div:first-child img.logo {
         width: 10rem;
-        height: 4rem;
+        height: 100%;
         margin-right: $xlg;
+        position: relative;
     }
 
     section div:first-child input[type=search] {
+        align-self: center;
         background-color: darken($off-white, 5%);
         border-radius: 3px;
-        max-width: 100%;
-        height: 120%;
-        padding: $xs $normal;    
+        padding-left: $xs;    
+        padding-right: $xs;    
         transition: 0.2s linear all;
     }
     section div:first-child input[type=search]::placeholder {
@@ -45,12 +47,15 @@ header {
     }
 
     section div:first-child button {
+        align-self: center;
+        height: 3.6rem;
         background-color: $orange;
         border: none;
         cursor: pointer;
         margin-left: -2rem;
         margin-top: -0.6rem;
-        padding: 0.6rem $normal;
+        height: 64%;
+        padding: $xs $normal;
         border-top-right-radius: 3px;
         border-bottom-right-radius: 3px;
         transition: 0.2s linear all;
@@ -63,6 +68,7 @@ header {
         display: flex;
         align-items: center;
         justify-content: space-evenly;
+        width: 20vw;
     }
 
     section div:last-child a:last-child {
@@ -75,6 +81,68 @@ header {
     section div:last-child a:last-child:hover {
         background-color: darken($orange, 2%);
         box-shadow: $shadow;
+    }
+
+    .greeting {
+        padding: $xs $normal;
+        font-weight: bold;
+    }
+
+    .greeting:hover {
+        color: $orange;
+    }
+
+    .dropdown-icon {
+        margin-right: $xs;
+    }
+
+    section div:last-child .account-dropdown {
+        background-color: $white;
+        box-shadow: $shadow;
+        position: absolute;
+        top: $lg;
+        left: 78%;
+        z-index: 3;
+    }
+
+    section div:last-child .account-dropdown li {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    section div:last-child .account-dropdown li:hover {
+        background-color: darken($off-white, 10%);
+    }
+
+    section div:last-child .account-dropdown li a {
+        color: $off-black;
+        background-color: transparent;
+        box-shadow: none;
+    }
+    section div:last-child .account-dropdown li a:hover {
+        background-color: transparent;
+        color: $orange;
+        box-shadow: none;
+    }
+
+    .logout-button {
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+        padding: $xs $normal;
+        text-align: left;
+    }
+
+    .logout-button:visited {
+        background-color: transparent !important;
+    }
+
+    .logout-button:active {
+        background-color: transparent !important;
+    }
+
+    .logout-button:hover {
+        color: $orange;
     }
 
     .cart {
@@ -115,8 +183,17 @@ header {
         grid-template-columns: 1fr 0;
     }
 
+    section div:first-child {
+        width: 100vw !important;
+    }
+
+    section div:last-child {
+        display: none !important;
+    }
+
     span.menu-icon {
         display: block !important;
+        margin-top: $normal;
     }
 
     .brand-logo {

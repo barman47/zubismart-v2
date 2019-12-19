@@ -30,7 +30,6 @@ export const loginUser = (user) => (dispatch) => {
 
             // Set current user
             dispatch(setCurrentUser(decoded));
-
         })
         .catch(err => {
             try {
@@ -59,14 +58,14 @@ export const loginUser = (user) => (dispatch) => {
         });
 };
 
-export const registerUser = (user) => (dispatch, history) => {
+export const registerUser = (user, history) => (dispatch) => {
     axios.post('/api/users/register', user)
         .then(res => {
             dispatch({
                 type: CLEAR_ERRORS,
                 payload: {}
             });
-            history.push('/account/login');
+            history.push('/users/login');
         })
         .catch(err => {
             dispatch({
@@ -141,6 +140,7 @@ export const setCurrentUser = (decoded) => {
 }
 
 export const logoutUser = () => (dispatch) => {
+    console.log('Logout user');
     localStorage.removeItem('jwtToken');
     setAuthToken(false);
     dispatch(setCurrentUser({}));

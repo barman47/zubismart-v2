@@ -1,112 +1,72 @@
-.login-container {
-    background-image: url('../../assets/img/cube.jpg');
-    background-position: center;
-    background-size: cover;
-    width: 100vw;
-    height: 105%;
-    position: absolute;
-    top: 0;
-    z-index: -1;
+.login {
+    font-family: $quicksand;
 
-    .form-container {
-        background: transparent;
-        width: 100%;
-        height: 100%;
-    }
-
-    form {
-        background-color: #fff;
-        padding-left: $lg;
-        padding-right: $lg;
-        padding-bottom: $normal;
-        float: right;
+    .login-form {
+        background-color: $off-white;
+        border-radius: $radius;
+        margin: $lg auto;
         width: 40%;
-        height: 100%;
+        padding: $xs $normal $sm $normal;
     }
 
-    form h3 {
-        background: linear-gradient(to right, $blue, darken($blue, 30%));
-        color: $off-white;
-        margin-top: 0;
-        text-align: center;
-        padding-top: $md;
-        padding-bottom: $md;
-        position: absolute;
-        right: 0;
-        width: 40%;
-    }
-
-    form h4 {
+    .login-form h3 {
         color: $off-black;
-        text-align: center;
-        margin-top: 11rem;
-    }
-
-    form p {
+        border-bottom: 1px solid darken($off-white, 15%);
+        font-size: $md;
+        padding-bottom: $sm;
         text-align: center;
     }
 
-    .login-icon {
-        color: $off-black;
-        font-size: $xlg;
-    }
-
-    .icon {
-        color: lighten($off-black, 5%);
-    }
-
-    form .loginButton {
-        background-color: $blue;
+    button {
         border: none;
-        border-radius: $button-radius;
-        box-shadow: $shadow;
-        color: #fff;
+        border-radius: $radius;
+        color: $off-white;
         cursor: pointer;
-        padding: $normal $xlg;
-        text-align: center;
-        transition: 0.3s linear all;
+        font-family: $quicksand;
+        padding: $normal 0;
         width: 100%;
+        transition: 0.3s linear all;
     }
 
-    form .loginButton:hover {
-        background-color: darken($blue, 10%);
-        box-shadow: none;
-        transform: scale(.95);
+    button[type=submit] {
+        background-color: $orange;
     }
-
-    form .loginButton:focus {
-        outline: none;
+    button[type=submit]:hover {
+        background-color: darken($orange, 5%);
+        box-shadow: $shadow;
     }
-}
-
-.button-container {
-    background-color: rgba(0, 0, 0, .4);
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    overflow: hidden;
 
     p {
-        color: $off-white;
+        text-align: center;
+    }
+
+    button.login {
+        background-color: $green;
+        margin-top: $sm;
+    }
+    button.login:hover {
+        background-color: darken($green, 5%);
+        box-shadow: $shadow;
+    }
+
+    a:hover {
+        text-decoration: underline;
     }
 }
 
-.show {
-    display: flex !important;
+@media (max-width: $lg-breakpoint) {
+    .login-form {
+        width: 70% !important;
+    }
 }
 
 @media (max-width: $md-breakpoint) {
-    .login-container form {
-        padding-left: $sm;
-        padding-right: $sm;
-        width: 100%;
+    .login-form {
+        width: 95vw !important;
+        margin: $sm !important;
     }
 
-    .login-container form h3 {
-        width: 100%;
+    .login-form h3 {
+        font-size: $sm !important;
     }
 }

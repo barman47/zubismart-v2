@@ -3,7 +3,8 @@ import isEmpty from "../validation/is-empty";
 
 const initialState = {
     msg: '',
-    authenticated: false
+    authenticated: false,
+    user: null
 };
 
 export default (state = initialState, action) => {
@@ -11,7 +12,8 @@ export default (state = initialState, action) => {
         case SET_CURRENT_USER:
             return {
                 ...state,
-                authenticated: !isEmpty(action.payload)
+                authenticated: !isEmpty(action.payload),
+                user: action.payload
             };
 
         case REQUEST_SUCCESS:
