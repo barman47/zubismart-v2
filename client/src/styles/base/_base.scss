@@ -124,3 +124,9 @@ div.breadcrumb::before {
     position: relative;
     top: -4px;
 }
+
+@media (max-width: $sm-breakpoint) {
+    .breadcrumb h2 {
+        font-size: $md;
+    }
+}

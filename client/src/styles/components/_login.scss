@@ -5,8 +5,8 @@
         background-color: $off-white;
         border-radius: $radius;
         margin: $lg auto;
-        width: 40%;
-        padding: $xs $normal $sm $normal;
+        width: 50%;
+        padding: $xs $md $sm $md;
     }
 
     .login-form h3 {
@@ -62,8 +62,8 @@
 
 @media (max-width: $md-breakpoint) {
     .login-form {
-        width: 95vw !important;
-        margin: $sm !important;
+        width: 90vw !important;
+        padding-bottom: $lg !important;
     }
 
     .login-form h3 {

@@ -7,6 +7,8 @@ import PropTypes from 'prop-types';
 import logo from '../../assets/img/logo.jpg';
 
 import isEmpty from '../../validation/is-empty';
+import capitalize from '../../utils/capitalize';
+
 import { logoutUser } from '../../actions/userActions';
 
 class Navigation extends Component {
@@ -62,8 +64,8 @@ class Navigation extends Component {
                     My Account
                 </Link>
                 {showDropdown ? (
-                    <ul className="account-dropdown">
-                        <li className="greeting">Hi, {user.firstName} !</li>
+                    <ul onMouseLeave={this.hideDropdown} className="account-dropdown">
+                        <li className="greeting">Hi, {capitalize(user.firstName)} !</li>
                         <li className="divider"></li>
                         <li><Link to="/account/profile"><span className="mdi mdi-account-outline dropdown-icon"></span>My Profile</Link></li>
                         <li><Link to="/account/orders"><span className="mdi mdi-bookmark-check dropdown-icon"></span>My Orders</Link></li>
@@ -97,8 +99,8 @@ class Navigation extends Component {
                         <ul className="hide-on-med-and-down">
                             <li><Link to="">Fashion</Link></li>
                             <li><Link to="">Gadgets</Link></li>
-                            <li><Link to="">Cosmetics/Beauty</Link></li>
-                            <li><Link to="">Home Appliances/Furniture</Link></li>
+                            <li><Link to="">Cosmetics</Link></li>
+                            <li><Link to="">Home/Office</Link></li>
                             <li><Link to="">Groceries</Link></li>
                             <li><Link to="">Babies</Link></li>
                             <li><Link to="">Books</Link></li>
@@ -113,8 +115,8 @@ class Navigation extends Component {
                     <li className="divider"></li>
                     <li><Link to="">Fashion</Link></li>
                     <li><Link to="">Gadgets</Link></li>
-                    <li><Link to="">Cosmetics/Beauty</Link></li>
-                    <li><Link to="">Home Appliances/Furniture</Link></li>
+                    <li><Link to="">Cosmetics</Link></li>
+                    <li><Link to="">Home/Office</Link></li>
                     <li><Link to="">Groceries</Link></li>
                     <li><Link to="">Babies</Link></li>
                     <li><Link to="">Books</Link></li>

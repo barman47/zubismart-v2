@@ -8,6 +8,7 @@ const validateRegisterInput = require('../../utils/validation/register');
 const validateLoginInput = require('../../utils/validation/login');
 const validateChangePasswordInput = require('../../utils/validation/changePassword');
 const validateUpdateDataInput = require('../../utils/validation/updateData');
+const validateAddressInput = require('../../utils/validation/addAddress');
 
 const { secretOrKey } = require('../../config/keys');
 
@@ -89,6 +90,7 @@ router.post('/login', (req, res) => {
                         lastName: user.lastName,
                         email: user.email,
                         phone: user.phone,
+                        address: user.address,
                         lastSeen: user.lastSeen,
                         createdAt: user.createdAt
                     };
@@ -172,44 +174,83 @@ router.put('/updateData', passport.authenticate('jwt-user', { session: false }),
         firstName: req.body.firstName.toUpperCase(),
         lastName: req.body.lastName.toUpperCase(),
         email: req.body.email.toLowerCase(), 
-        phone: req.body.phone,
-        password: req.body.password
+        phone: req.body.phone
     };
 
     User.findOne({ _id: req.user.id })
         .then(user => {
             if (user) {
-                bcrypt.compare(req.body.password, user.password)
-                    .then(isMatch => {
-                        if (!isMatch) {
-                            errors.password = 'Incorrect password!';
-                            return res.status(401).json(errors);
-                        }
-                        user.firstName = userData.firstName;
-                        user.lastName = userData.lastName;
-                        user.email = userData.email;
-                        user.phone = userData.phone;
-                        user.adress = userData.adress;
-                        user.save()
-                            .then(updatedUser => {
-                                const payload = {
-                                    msg: 'Update Successful',
-                                    id: updatedUser.id,
-                                    firstName: updatedUser.firstName,
-                                    lastName: updatedUser.lastName,
-                                    email: updatedUser.email,
-                                    phone: updatedUser.phone,
-                                    lastSeen: user.lastSeen,
-                                    createdAt: user.createdAt,
-                                };
-                                jwt.sign(payload, secretOrKey, { expiresIn: '30 days' }, (err, token) => {
-                                    res.json({
-                                        ...payload,
-                                        token: `Bearer ${token}`
-                                    });
-                                });
-                            })
-                            .catch(err => console.log(err));
+                user.firstName = userData.firstName;
+                user.lastName = userData.lastName;
+                user.email = userData.email;
+                user.phone = userData.phone;
+                user.save()
+                    .then(updatedUser => {
+                        const payload = {
+                            msg: 'Update Successful',
+                            id: updatedUser.id,
+                            firstName: updatedUser.firstName,
+                            lastName: updatedUser.lastName,
+                            email: updatedUser.email,
+                            phone: updatedUser.phone,
+                            address: updatedUser.address,
+                            lastSeen: user.lastSeen,
+                            createdAt: user.createdAt,
+                        };
+                        jwt.sign(payload, secretOrKey, { expiresIn: '30 days' }, (err, token) => {
+                            res.json({
+                                ...payload,
+                                token: `Bearer ${token}`
+                            });
+                        });
+                    })
+                    .catch(err => console.log(err));
+            }
+        })
+        .catch(err => console.log(err));
+});
+
+// Add Address
+// @route PUT /api/users/addAddress
+// @desc add user address
+// @access Private
+router.put('/addAddress', passport.authenticate('jwt-user', { session: false }), (req, res) => {
+    const { errors, isValid } = validateAddressInput(req.body);
+
+    if (!isValid) {
+        return res.status(400).json(errors);
+    }
+
+    const addressData = {
+        firstName: req.body.firstName.toUpperCase(),
+        lastName: req.body.lastName.toUpperCase(),
+        phone: req.body.phone,
+        address: req.body.address
+    };
+
+    User.findOne({ _id: req.user.id })
+        .then(user => {
+            if (user) {
+                user.address.unshift(addressData);
+                user.save()
+                    .then(updatedUser => {
+                        const payload = {
+                            msg: 'Update Successful',
+                            id: updatedUser.id,
+                            firstName: updatedUser.firstName,
+                            lastName: updatedUser.lastName,
+                            email: updatedUser.email,
+                            phone: updatedUser.phone,
+                            address: updatedUser.address,
+                            lastSeen: user.lastSeen,
+                            createdAt: user.createdAt,
+                        };
+                        jwt.sign(payload, secretOrKey, { expiresIn: '30 days' }, (err, token) => {
+                            res.json({
+                                ...payload,
+                                token: `Bearer ${token}`
+                            });
+                        });
                     })
                     .catch(err => console.log(err));
             }

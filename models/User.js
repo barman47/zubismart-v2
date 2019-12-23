@@ -31,9 +31,24 @@ const UserSchema = new Schema({
         type: String
     },
 
-    address: {
-        type: String
-    },
+    address: [
+        {
+            firstName: {
+                type: String,
+            },
+
+            lastName: {
+                type: String
+            },
+            
+            address: {
+                type: String
+            },
+            phone: {
+                type: String
+            }
+        }
+    ],
 
     createdAt: {
         type: Date,

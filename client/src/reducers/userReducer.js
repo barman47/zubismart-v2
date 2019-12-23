@@ -1,4 +1,4 @@
-import { SET_CURRENT_USER, SET_USER_COLOR, REQUEST_SUCCESS } from "../actions/types";
+import { ADDRESS_ADDED, SET_CURRENT_USER, SET_USER_COLOR, REQUEST_SUCCESS } from "../actions/types";
 import isEmpty from "../validation/is-empty";
 
 const initialState = {
@@ -20,6 +20,12 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 msg: action.payload
+            }
+
+        case ADDRESS_ADDED:
+            return {
+                ...state,
+                user: action.payload
             }
 
         case SET_USER_COLOR:

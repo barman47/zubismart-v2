@@ -10,6 +10,7 @@ import Home from './components/Home';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Profile from './components/user/Profile';
+import Address from './components/user/Address';
 
 import PrivateRoute from './components/common/PrivateRoute'; 
 
@@ -47,7 +48,9 @@ class App extends Component {
 							<Switch>
 								<PrivateRoute path="/account/profile" exact component={Profile} />
 							</Switch>
-
+							<Switch>
+								<PrivateRoute path="/account/deliveryAddress" exact component={Address} />
+							</Switch>
 							<Footer />
 						</Fragment>
 					</ScrollToTop>

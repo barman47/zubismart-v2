@@ -63,7 +63,7 @@ const Login = (props) => {
                         <button type="submit">Login</button>
                     </div>
                     <div className="col s12">
-                        <p>Don't have an account?</p>
+                        <p>Don't have an account yet? No Problem!</p>
                         <button onClick={() => props.history.push('/users/register')} className="login">Register</button>
                     </div>
                 </form>
