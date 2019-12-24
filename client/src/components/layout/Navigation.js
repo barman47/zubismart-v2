@@ -15,13 +15,16 @@ class Navigation extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            user: {},
+            user: null,
             showDropdown: false
         };
     }
 
     componentDidMount () {
-        this.setState({ user: this.props.user.user });
+        this.setState({ 
+            user: this.props.user.user ,
+            showDropdown: false
+        });
         const elems = document.querySelectorAll('.sidenav');
         //eslint-disable-next-line
         const instances = M.Sidenav.init(elems, {});
@@ -33,7 +36,11 @@ class Navigation extends Component {
 
     UNSAFE_componentWillReceiveProps (nextProps) {
         if(isEmpty(nextProps.user.user)) {
-            this.setState({ user: {} });
+            this.setState({ user: null });
+            M.toast({
+                html: 'User logged out Successfully',
+                classes: 'toast-valid'
+            });
         } else {
             this.setState({ user: nextProps.user.user });
         }
@@ -46,7 +53,8 @@ class Navigation extends Component {
     hideDropdown = () => this.setState({ showDropdown: false });
 
     onLogoutClick = () => {
-        this.props.logoutUser()
+        this.props.logoutUser();
+        this.setState({ showDropdown: false });
     }
 
     render () {
@@ -59,13 +67,13 @@ class Navigation extends Component {
     
         const userHeader = (
             <>
-                <Link to="/!#" className="grid-item" onMouseEnter={this.showMyAccountDropdown}>
+                <Link to="/!#" className="grid-item" onMouseOver={this.showMyAccountDropdown}>
                     <span className="mdi mdi-chevron-down right"></span>
                     My Account
                 </Link>
                 {showDropdown ? (
                     <ul onMouseLeave={this.hideDropdown} className="account-dropdown">
-                        <li className="greeting">Hi, {capitalize(user.firstName)} !</li>
+                        <li className="greeting">{user && (`Hi, ${capitalize(user.firstName)} !`)}</li>
                         <li className="divider"></li>
                         <li><Link to="/account/profile"><span className="mdi mdi-account-outline dropdown-icon"></span>My Profile</Link></li>
                         <li><Link to="/account/orders"><span className="mdi mdi-bookmark-check dropdown-icon"></span>My Orders</Link></li>
@@ -90,7 +98,7 @@ class Navigation extends Component {
                         <button className="grid-item" type="submit"><span className="mdi mdi-magnify mdi-24px search-icon"></span></button>
                     </div>
                     <div>
-                        {user ?  userHeader : guestHeader}
+                        {user ? userHeader : guestHeader}
                         <Link to="/cart" className="grid-item"><span style={{ marginRight: '5px' }} className="mdi mdi-cart-outline mdi-12px left"></span>My Cart <span className="cart">0</span></Link>
                     </div>
                 </section>

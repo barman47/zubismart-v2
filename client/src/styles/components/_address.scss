@@ -72,6 +72,7 @@
         background-color: $white;
         border-radius: 5px;
         margin-bottom: $normal;
+        transition: 0.3s linear all;
 
         .address-header {
             border-bottom: 1px solid $off-white;
@@ -104,7 +105,7 @@
         }
         .address-header div button:last-child:hover {
             background-color: rgba(234, 67, 53, 0.15);
-            text-decoration: underline;
+            // text-decoration: underline;
         }
 
         .address-content p {
@@ -115,6 +116,10 @@
         .address-content p:last-child {
             margin-bottom: 0;
         }
+    }
+
+    .address:hover {
+        box-shadow: $shadow;
     }
 
     #address-modal {
@@ -223,6 +228,14 @@
 }
 
 @media (max-width: $sm-breakpoint) {
+    .no-address button {
+        width: 100%;
+    }
+
+    .available-address button:first-child {
+        width: 100%;
+    }
+
     #address-modal div.modal-content {
         margin: 0 !important;
         padding-right: 0 !important;
