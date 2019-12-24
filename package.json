@@ -30,7 +30,7 @@
     "bcryptjs": "^2.4.3",
     "concurrently": "^4.1.2",
     "express": "^4.17.1",
-    "express-fileupload": "^1.1.6-alpha.5",
+    "express-fileupload": "^1.1.6",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.24.0",
     "mongoose": "^5.7.0",

@@ -12,6 +12,7 @@ import capitalize from '../../utils/capitalize';
 import BreadCrumb from '../common/breadcrumb';
 import ProfileTextInput from '../input-group/ProfileTextInput';
 import isEmpty from '../../validation/is-empty';
+import isEqual from '../../utils/isEqual';
 
 class Profile extends Component {
     constructor (props) {
@@ -41,31 +42,44 @@ class Profile extends Component {
         });
     }
 
-    UNSAFE_componentWillReceiveProps (nextProps) {
+    UNSAFE_componentWillReceiveProps (nextProps, prevState) {
         const { user, errors } = nextProps;
-        if (isEmpty(errors)) {
-            this.setState({
-                currentPassword: '',
-                newPassword: '',
-                confirmPassword: ''
-            }, () => {
-                this.form.current.reset();
-            });
-        }
+        
+        const oldUser = {
+            firstName: prevState.firstName,
+            lastName: prevState.lastName,
+            email: prevState.email,
+            phone: prevState.phone
+        };
 
-        if (errors) {
-            this.setState({
-                errors
-            });
-        }
-
-        if (!isEmpty(user.message)) {
+        const newUser = {
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            phone: user.phone
+        };
+        
+        if (isEqual(oldUser, newUser)) {
             this.setState({
                 user: user.user,
+                firstName: user.user.firstName,
+                lastName: user.user.lastName,
+                email: user.user.email,
+                phone: user.user.phone,
+                errors: {}
+            });
+        }
+
+        if (isEmpty(errors)) {
+            this.setState({ 
                 currentPassword: '',
                 newPassword: '',
                 confirmPassword: '',
-                errors: nextProps.errors
+                errors: {} 
+            }, () => this.form.current.reset());
+        } else {
+            this.setState({
+                errors
             });
         }
     }

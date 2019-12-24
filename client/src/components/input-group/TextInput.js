@@ -8,6 +8,7 @@ const TextInput = ({
     id,
     name,
     value,
+    placeholder,
     onChange,
     icon,
     info,
@@ -25,6 +26,7 @@ const TextInput = ({
                 type={type}
                 name={name}
                 value={value}
+                placeholder={placeholder}
                 onChange={onChange}
                 disabled={disabled}
             />
@@ -39,6 +41,7 @@ TextInput.propTypes = {
     type: PropTypes.string,
     name: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
+    placeholder: PropTypes.string,
     icon: PropTypes.string.isRequired,
     info: PropTypes.string,
     errorMessage: PropTypes.string,

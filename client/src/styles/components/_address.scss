@@ -64,6 +64,10 @@
         }
     }
 
+    .address:first-child {
+        width: 100% !important;
+    }
+
     .address {
         background-color: $white;
         border-radius: 5px;
@@ -245,5 +249,9 @@
 
     .address-header-icon {
         font-size: $lg !important;
+    }
+
+    .address-header div button:first-child {
+        margin-right: 0 !important;
     }
 }

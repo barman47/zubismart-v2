@@ -1,6 +1,6 @@
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
-import { ADDRESS_ADDED,GET_ERRORS, SET_CURRENT_USER, SET_USER_COLOR, REQUEST_SUCCESS } from './types';
+import { ADDRESS_UPDATED, GET_ERRORS, SET_CURRENT_USER, SET_USER_COLOR, REQUEST_SUCCESS } from './types';
 import M from 'materialize-css';
 import setAuthToken from '../utils/setAuthToken';
 
@@ -96,10 +96,6 @@ export const updateUserData = (userData) => (dispatch) => {
                 dispatch(setCurrentUser(decoded));
             }
             dispatch({
-                type: REQUEST_SUCCESS,
-                payload: res.data
-            });
-            dispatch({
                 type: GET_ERRORS,
                 payload: {}
             });
@@ -130,8 +126,9 @@ export const addAddress = (address) => (dispatch) => {
     axios.put('/api/users/addAddress', address)
         .then(res => {
             M.toast({
-                html: 'Address added successfully',
+                html: 'Address saved successfully',
                 classes: 'toast-valid', 
+                displayLength: 3000,
                 completeCallback: () => {
                     if (localStorage.jwtToken) {
                         localStorage.removeItem('jwtToken');
@@ -145,11 +142,6 @@ export const addAddress = (address) => (dispatch) => {
                         const decoded = jwt_decode(token);
                         dispatch(setCurrentUser(decoded));
                     }
-        
-                    dispatch({
-                        type: ADDRESS_ADDED,
-                        payload: res.data
-                    });
                 }
             });
         })
@@ -172,17 +164,32 @@ export const addAddress = (address) => (dispatch) => {
 };
 
 export const removeAddress = (addressId) => (dispatch) => {
-    console.log(addressId);
-    alert('You no see the way I dey look you?');
+    axios.put('/api/users/removeAddress', addressId)
+        .then(res => {
+            M.toast({
+                html: 'Address Removed',
+                classes: 'toast-valid',
+                displayLength: 3000
+            });
+            if (localStorage.jwtToken) {
+                localStorage.removeItem('jwtToken');
+
+                const userData = res.data;
+                const token = userData.token;
+                delete userData.token;
+                
+                localStorage.setItem('jwtToken', token);
+                setAuthToken(token);
+                const decoded = jwt_decode(token);
+                dispatch(setCurrentUser(decoded));
+            }
+        })
+        .catch(err => console.error(err));
 }; 
 
 export const changePassword = (data) => (dispatch) => {
     axios.put('/api/users/changePassword', data)
         .then(res => {
-            dispatch({
-                type: REQUEST_SUCCESS,
-                payload: res.data
-            });
             dispatch({
                 type: GET_ERRORS,
                 payload: {}

@@ -187,7 +187,6 @@ router.put('/updateData', passport.authenticate('jwt-user', { session: false }),
                 user.save()
                     .then(updatedUser => {
                         const payload = {
-                            msg: 'Update Successful',
                             id: updatedUser.id,
                             firstName: updatedUser.firstName,
                             lastName: updatedUser.lastName,
@@ -235,7 +234,43 @@ router.put('/addAddress', passport.authenticate('jwt-user', { session: false }),
                 user.save()
                     .then(updatedUser => {
                         const payload = {
-                            msg: 'Update Successful',
+                            id: updatedUser.id,
+                            firstName: updatedUser.firstName,
+                            lastName: updatedUser.lastName,
+                            email: updatedUser.email,
+                            phone: updatedUser.phone,
+                            address: updatedUser.address,
+                            lastSeen: user.lastSeen,
+                            createdAt: user.createdAt,
+                        };
+                        jwt.sign(payload, secretOrKey, { expiresIn: '30 days' }, (err, token) => {
+                            res.json({
+                                ...payload,
+                                token: `Bearer ${token}`
+                            });
+                        });
+                    })
+                    .catch(err => console.log(err));
+            }
+        })
+        .catch(err => console.log(err));
+});
+
+// Remove Address
+// @route DELETE /api/users/removeAddress
+// @desc remove user address
+// @access Private
+router.put('/removeAddress', passport.authenticate('jwt-user', { session: false }), (req, res) => {
+    console.log(req.body);
+
+    User.findOne({ _id: req.user.id })
+        .then(user => {
+            if (user) {
+                const addresses = user.address.filter((address) => address.id !== req.body.id );
+                user.address = addresses;
+                user.save()
+                    .then(updatedUser => {
+                        const payload = {
                             id: updatedUser.id,
                             firstName: updatedUser.firstName,
                             lastName: updatedUser.lastName,

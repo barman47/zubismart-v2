@@ -54,6 +54,7 @@ class Address extends Component {
                 this.modalCloseButton.current.click();
             }); 
         }
+        
 
         if (nextProps.errors) {
             this.setState({ errors: nextProps.errors });
@@ -69,6 +70,21 @@ class Address extends Component {
             errors: {}
         });
         this.addressForm.current.reset();
+    }
+
+    removeAddress = (id) => {
+        const addressId = { id };
+        this.props.removeAddress(addressId);
+    }
+
+    showEditModal = (addressData) => {
+        const { firstName, lastName, phone, address } = addressData;
+        this.setState({ 
+            firstName, 
+            lastName,
+            phone,
+            address
+         });
     }
 
     onChange = (e) => {
@@ -96,8 +112,18 @@ class Address extends Component {
                 <section className="address-header">
                     <h6>Address {index + 1}</h6>
                     <div>
-                        <button>Edit</button>
-                        <button onClick={this.props.removeAddress}>Delete</button>
+                        <button onClick={() => this.showEditModal({ 
+                            firstName: address.firstName,
+                            lastName: address.lastName,
+                            phone: address.phone,
+                            address: address.address
+                         })} 
+                         className="modal-trigger" 
+                         data-target="address-modal"
+                         >
+                            Edit
+                        </button>
+                        <button onClick={() => this.removeAddress(address._id)}>Delete</button>
                     </div>
                 </section>
                 <section className="address-content">
@@ -150,7 +176,7 @@ class Address extends Component {
                                         id="firstName"
                                         name="firstName"
                                         value={firstName}
-                                        label="First Name"
+                                        placeholder="First Name"
                                         onChange={this.onChange}
                                         errorMessage={errors.firstName}
                                     />
@@ -159,7 +185,7 @@ class Address extends Component {
                                         id="lastName"
                                         name="lastName"
                                         value={lastName}
-                                        label="Last Name"
+                                        placeholder="Last Name"
                                         onChange={this.onChange}
                                         errorMessage={errors.lastName}
                                     />
@@ -168,7 +194,7 @@ class Address extends Component {
                                         id="phone"
                                         name="phone"
                                         value={phone}
-                                        label="Mobile Number"
+                                        placeholder="Mobile Number"
                                         onChange={this.onChange}
                                         errorMessage={errors.phone}
                                         info="e.g. 08012345678"
@@ -180,11 +206,11 @@ class Address extends Component {
                                                 name="address" 
                                                 id="address" 
                                                 className={`form-input materialize-textarea`} 
+                                                placeholder="Delivery Address"
                                                 value={address} 
                                                 onChange={this.onChange}
                                             >
                                             </textarea>
-                                            <label htmlFor="address">Delivery Address</label>
                                             {errors.address ? (<span className="helper-text invalid-text">{errors.address}</span>) : null}
                                         </div>
                                     </div>
