@@ -10,6 +10,8 @@ const validateChangePasswordInput = require('../../utils/validation/changePasswo
 const validateUpdateDataInput = require('../../utils/validation/updateData');
 const validateAddressInput = require('../../utils/validation/addAddress');
 
+const { registerAdmin } = require('../../utils/utils');
+
 const { secretOrKey } = require('../../config/keys');
 
 // Register new user
@@ -64,7 +66,6 @@ router.post('/register', (req, res) => {
 // router.post('/login', (req, res) => {
 router.post('/login', (req, res) => {
     const { errors, isValid } = validateLoginInput(req.body);
-
     if (!isValid) {
         return res.status(400).json(errors);
     }

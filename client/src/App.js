@@ -9,9 +9,12 @@ import Footer from './components/layout/Footer';
 import Home from './components/Home';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
+import LoginAdmin from './components/admin/Login';
+import AdminDashboard from './components/admin/AdminDashboard';
 import Profile from './components/user/Profile';
 import Address from './components/user/Address';
 
+import AdminRoute from './components/common/AdminRoute'; 
 import PrivateRoute from './components/common/PrivateRoute'; 
 
 import store from './store';
@@ -19,10 +22,26 @@ import setAuthToken from './utils/setAuthToken';
 import { logoutUser, setCurrentUser } from './actions/userActions';
 
 if (localStorage.jwtToken) {
-	// set auth tokwn to header auth
+	// set auth token to header auth
 	setAuthToken(localStorage.jwtToken);
 	// Decode token and get user info
 	const decoded = jwt_decode(localStorage.jwtToken);
+	// Set user and authenticated
+	store.dispatch(setCurrentUser(decoded));
+	// Check for expired token
+	const currentTime = Date.now() / 1000;
+	if (decoded.exp < currentTime) {
+		// Logout out user
+		store.dispatch(logoutUser());
+		window.location.href = '/';
+	}
+}
+
+if (localStorage.jwtAdminToken) {
+	// set auth token to header auth
+	setAuthToken(localStorage.jwtAdminToken);
+	// Decode token and get user info
+	const decoded = jwt_decode(localStorage.jwtAdminToken);
 	// Set user and authenticated
 	store.dispatch(setCurrentUser(decoded));
 	// Check for expired token
@@ -45,6 +64,10 @@ class App extends Component {
 							<Route exact path="/" component={Home} />
 							<Route exact path="/users/login" component={Login} />
 							<Route exact path="/users/register" component={Register} />
+							<Route exact path="/admin/login" component={LoginAdmin} />
+							<Switch>
+								<AdminRoute path="/admin/dashboard" exact component={AdminDashboard} />
+							</Switch>
 							<Switch>
 								<PrivateRoute path="/account/profile" exact component={Profile} />
 							</Switch>

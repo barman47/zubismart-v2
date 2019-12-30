@@ -25,7 +25,7 @@ router.post('/register', (req, res) => {
 
     const admin = new Admin({
         name: req.body.name.toUpperCase(),
-        username: req.body.username,
+        email: req.body.email,
         password: req.body.password
     });
 
@@ -34,10 +34,10 @@ router.post('/register', (req, res) => {
         return res.status(401).json(errors);
     }
 
-    Admin.findOne({ username: admin.username })
+    Admin.findOne({ email: admin.email })
         .then(returnedAdmin => {
             if (returnedAdmin) {
-                errors.username = 'Admin already exists!';
+                errors.email = 'Admin already exists!';
                 return res.status(501).json(errors)
             }
 
@@ -65,19 +65,21 @@ router.post('/register', (req, res) => {
 // @desc Login Admin
 // @access Private
 router.post('/login', (req, res) => {
+    console.log('login admin');
+    console.log(req.body);
     const { errors, isValid } = validateAdminLogin(req.body);
 
     if (!isValid) {
         return res.status(400).json(errors);
     }
 
-    const username = req.body.username;
+    const email = req.body.email;
     const password = req.body.password;
 
-    Admin.findOne({ username })
+    Admin.findOne({ email })
         .then(admin => {
             if (!admin) {
-                errors.username = 'Admin not found!';
+                errors.email = 'Admin not found!';
                 res.status(404).json(errors);
             }
 
@@ -87,7 +89,8 @@ router.post('/login', (req, res) => {
                         // Admin matched
                         const payload = {
                             id: admin.id,
-                            username: admin.username,
+                            email: admin.email,
+                            name: admin.name,
                             createdAt: admin.createdAt
                         }; // JWT Payload
 

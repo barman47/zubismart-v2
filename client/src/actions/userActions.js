@@ -1,6 +1,6 @@
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
-import { ADDRESS_UPDATED, GET_ERRORS, SET_CURRENT_USER, SET_USER_COLOR, REQUEST_SUCCESS } from './types';
+import { GET_ERRORS, SET_CURRENT_USER } from './types';
 import M from 'materialize-css';
 import setAuthToken from '../utils/setAuthToken';
 
@@ -216,11 +216,6 @@ export const changePassword = (data) => (dispatch) => {
             }
         });
 };
-
-export const setUserColor = (color) => (dispatch) => dispatch({
-    type: SET_USER_COLOR,
-    payload: color
-});
 
 // Set logged in user
 export const setCurrentUser = (decoded) => {
