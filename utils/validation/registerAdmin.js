@@ -8,7 +8,7 @@ module.exports = (data) => {
     data.email = !isEmpty(data.email) ?  data.email : '';
     data.password = !isEmpty(data.password) ?  data.password : '';
 
-    if (!Validator.isLength(data.name, { min: 2, max: 15 })) {
+    if (!Validator.isLength(data.name, { min: 2, max: 30 })) {
         errors.name = 'name must be from 2 to 15 characters long!'
     }
     if(Validator.isNumeric(data.name)) {
