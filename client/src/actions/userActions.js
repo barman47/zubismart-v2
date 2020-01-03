@@ -16,6 +16,10 @@ export const loginUser = (user) => (dispatch) => {
                 classes: 'toast-valid'
             });
 
+            if (localStorage.jwtAdminToken) {
+                localStorage.removeItem('jwtAdminToken');
+            }
+
             // Save token to local storage
             const { token } = res.data;
             
@@ -229,4 +233,8 @@ export const logoutUser = () => (dispatch) => {
     localStorage.removeItem('jwtToken');
     setAuthToken(false);
     dispatch(setCurrentUser(null));
+    M.toast({
+        html: 'User logged out Successfully',
+        classes: 'toast-valid'
+    });
 };

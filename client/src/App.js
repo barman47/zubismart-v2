@@ -20,6 +20,7 @@ import PrivateRoute from './components/common/PrivateRoute';
 import store from './store';
 import setAuthToken from './utils/setAuthToken';
 import { logoutUser, setCurrentUser } from './actions/userActions';
+import { logoutAdmin, setCurrentAdmin } from './actions/adminActions';
 
 if (localStorage.jwtToken) {
 	// set auth token to header auth
@@ -43,12 +44,12 @@ if (localStorage.jwtAdminToken) {
 	// Decode token and get user info
 	const decoded = jwt_decode(localStorage.jwtAdminToken);
 	// Set user and authenticated
-	store.dispatch(setCurrentUser(decoded));
+	store.dispatch(setCurrentAdmin(decoded));
 	// Check for expired token
 	const currentTime = Date.now() / 1000;
 	if (decoded.exp < currentTime) {
-		// Logout out user
-		store.dispatch(logoutUser());
+		// Logout out admin
+		store.dispatch(logoutAdmin());
 		window.location.href = '/';
 	}
 }

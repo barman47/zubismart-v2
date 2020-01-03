@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { withRouter } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -13,6 +12,17 @@ const Login = (props) => {
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState({});
 
+    // componentDidMount
+    useEffect(() => {
+        if (props.user.user) {
+            props.history.push('/');
+        }
+
+        if (props.admin) {
+            props.history.push('/');
+        }
+    }, []);
+
     // componentDidUpdate
     useEffect(() => {
         const { errors, history, admin } = props;
@@ -21,10 +31,9 @@ const Login = (props) => {
         }
 
         if (admin) {
-            console.log('availabe admin');
             history.push('/admin/dashboard');
         }
-    }, [props.errors, props.admin]);
+    }, [props]);
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
@@ -75,7 +84,8 @@ Login.propTypes = {
 
 const mapStateToProps = (state) => ({
     errors: state.errors,
-    admin: state.admin
+    admin: state.admin,
+    user: state.user
 });
 
 export default connect(mapStateToProps, { loginAdmin })(Login);

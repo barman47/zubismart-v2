@@ -13,6 +13,17 @@ const Login = (props) => {
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState({});
 
+    // componentDidMount
+    useEffect(() => {
+        if (props.user.user) {
+            props.history.push('/');
+        }
+
+        if (props.admin) {
+            props.history.push('/');
+        }
+    }, []);
+
     // componentDidUpdate
     useEffect(() => {
         const { errors, history, user } = props;
@@ -78,6 +89,7 @@ Login.propTypes = {
 
 const mapStateToProps = (state) => ({
     errors: state.errors,
+    admin: state.admin,
     user: state.user
 });
 

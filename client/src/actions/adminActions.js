@@ -1,6 +1,6 @@
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
-import { ADDRESS_UPDATED, GET_ERRORS, SET_ADMIN, REQUEST_SUCCESS } from './types';
+import { GET_ERRORS, SET_ADMIN } from './types';
 import M from 'materialize-css';
 import setAuthToken from '../utils/setAuthToken';
 
@@ -15,6 +15,10 @@ export const loginAdmin = (admin) => (dispatch) => {
                 html: 'Admin Logged in successfuly',
                 classes: 'toast-valid'
             });
+
+            if (localStorage.jwtToken){
+                localStorage.removeItem('jwtToken');
+            }
 
             // Save token to local storage
             const { token } = res.data;
@@ -71,7 +75,7 @@ export const loginAdmin = (admin) => (dispatch) => {
 //                 localStorage.setItem('jwtToken', token);
 //                 setAuthToken(token);
 //                 const decoded = jwt_decode(token);
-//                 dispatch(setCurrentUser(decoded));
+//                 dispatch(setCurrentAdmin(decoded));
 //             }
 //             dispatch({
 //                 type: GET_ERRORS,
@@ -118,7 +122,7 @@ export const loginAdmin = (admin) => (dispatch) => {
 //                         localStorage.setItem('jwtToken', token);
 //                         setAuthToken(token);
 //                         const decoded = jwt_decode(token);
-//                         dispatch(setCurrentUser(decoded));
+//                         dispatch(setCurrentAdmin(decoded));
 //                     }
 //                 }
 //             });
@@ -159,7 +163,7 @@ export const loginAdmin = (admin) => (dispatch) => {
 //                 localStorage.setItem('jwtToken', token);
 //                 setAuthToken(token);
 //                 const decoded = jwt_decode(token);
-//                 dispatch(setCurrentUser(decoded));
+//                 dispatch(setCurrentAdmin(decoded));
 //             }
 //         })
 //         .catch(err => console.error(err));
@@ -207,4 +211,8 @@ export const logoutAdmin = () => (dispatch) => {
     localStorage.removeItem('jwtAdminToken');
     setAuthToken(false);
     dispatch(setCurrentAdmin(null));
+    M.toast({
+        html: 'Admin logged out Successfully',
+        classes: 'toast-valid'
+    });
 };

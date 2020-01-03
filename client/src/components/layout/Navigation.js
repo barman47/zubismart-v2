@@ -9,12 +9,14 @@ import logo from '../../assets/img/zubismart-2.png';
 import isEmpty from '../../validation/is-empty';
 import capitalize from '../../utils/capitalize';
 
+import { logoutAdmin } from '../../actions/adminActions';
 import { logoutUser } from '../../actions/userActions';
 
 class Navigation extends Component {
     constructor (props) {
         super(props);
         this.state = {
+            admin: null,
             user: null,
             showDropdown: false
         };
@@ -22,7 +24,8 @@ class Navigation extends Component {
 
     componentDidMount () {
         this.setState({ 
-            user: this.props.user.user ,
+            admin: this.props.admin,
+            user: this.props.user.user,
             showDropdown: false
         });
         const elems = document.querySelectorAll('.sidenav');
@@ -35,14 +38,18 @@ class Navigation extends Component {
     }
 
     UNSAFE_componentWillReceiveProps (nextProps) {
-        if(isEmpty(nextProps.user.user)) {
+        const { admin, user } = nextProps;
+        
+        if(isEmpty(user.user)) {
             this.setState({ user: null });
-            M.toast({
-                html: 'User logged out Successfully',
-                classes: 'toast-valid'
-            });
         } else {
-            this.setState({ user: nextProps.user.user });
+            this.setState({ user: user.user });
+        }
+
+        if (isEmpty(admin)) {
+            this.setState({ admin: null });
+        } else {
+            this.setState({ admin });
         }
     }
 
@@ -52,13 +59,27 @@ class Navigation extends Component {
 
     hideDropdown = () => this.setState({ showDropdown: false });
 
-    onLogoutClick = () => {
-        this.props.logoutUser();
-        this.setState({ showDropdown: false });
+    onLogoutClick = (useCase) => {
+        switch (useCase) {
+            case 'admin':
+                this.props.logoutAdmin();
+                this.setState({ showDropdown: false });
+                break;
+            
+            case 'user':
+                this.props.logoutUser();
+                this.setState({ showDropdown: false });
+                break;
+
+            default:
+                break;
+        }
     }
 
     render () {
-        const { showDropdown, user } = this.state;
+        const { showDropdown, user, admin } = this.state;
+        let header = null;
+
         const guestHeader = (
             <>
                 <Link to="/users/login" className="grid-item">Login</Link>
@@ -80,11 +101,40 @@ class Navigation extends Component {
                         <li><Link to="/account/favourites"><span className="mdi mdi-heart-outline dropdown-icon"></span>My Saved Items</Link></li>
                         <li><Link to="/account/wallet"><span className="mdi mdi-wallet-outline dropdown-icon"></span>My Wallet</Link></li>
                         <li className="divider"></li>
-                        <li><button className="logout-button" onClick={this.onLogoutClick} href="#"><span className="mdi mdi-logout dropdown-icon"></span>Logout</button></li>
+                        <li><button className="logout-button" onClick={() => this.onLogoutClick('user')} href="#"><span className="mdi mdi-logout dropdown-icon"></span>Logout</button></li>
                     </ul>
                 ) : null }
             </>
         );
+    
+        const adminHeader = (
+            <>
+                <Link to="/!#" className="grid-item" onMouseOver={this.showMyAccountDropdown}>
+                    <span className="mdi mdi-chevron-down right"></span>
+                    Admin
+                </Link>
+                {showDropdown ? (
+                    <ul onMouseLeave={this.hideDropdown} className="account-dropdown">
+                        <li className="greeting">{user && (`Hi, ${capitalize(user.firstName)} !`)}</li>
+                        <li className="divider"></li>
+                        <li><Link to="/account/profile"><span className="mdi mdi-account-outline dropdown-icon"></span>My Profile</Link></li>
+                        {/* <li><Link to="/account/orders"><span className="mdi mdi-bookmark-check dropdown-icon"></span>My Orders</Link></li>
+                        <li><Link to="/account/favourites"><span className="mdi mdi-heart-outline dropdown-icon"></span>My Saved Items</Link></li>
+                        <li><Link to="/account/wallet"><span className="mdi mdi-wallet-outline dropdown-icon"></span>My Wallet</Link></li> */}
+                        <li className="divider"></li>
+                        <li><button className="logout-button" onClick={() => this.onLogoutClick('admin')} href="#"><span className="mdi mdi-logout dropdown-icon"></span>Logout Admin</button></li>
+                    </ul>
+                ) : null }
+            </>
+        );
+
+        if (!isEmpty(user)) {
+            header = userHeader;
+        } else if (!isEmpty(admin)) {
+            header = adminHeader
+        } else {
+            header = guestHeader;
+        }
 
         return (
             <>
@@ -98,7 +148,7 @@ class Navigation extends Component {
                         <button className="grid-item" type="submit"><span className="mdi mdi-magnify mdi-24px search-icon"></span></button>
                     </div>
                     <div>
-                        {user ? userHeader : guestHeader}
+                        {header}
                         <Link to="/cart" className="grid-item"><span style={{ marginRight: '5px' }} className="mdi mdi-cart-outline mdi-12px left"></span>My Cart <span className="cart">0</span></Link>
                     </div>
                 </section>
@@ -138,11 +188,13 @@ class Navigation extends Component {
 };
 
 Navigation.propTypes = {
+    logoutAdmin: PropTypes.func.isRequired,
     logoutUser: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
+    admin: state.admin,
     user: state.user
 });
 
-export default connect(mapStateToProps, { logoutUser })(Navigation);
+export default connect(mapStateToProps, { logoutAdmin, logoutUser })(Navigation);

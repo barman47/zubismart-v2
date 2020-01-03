@@ -16,6 +16,17 @@ const Register = (props) => {
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState({});
 
+    // componentDidMount
+    useEffect(() => {
+        if (props.user.user) {
+            props.history.push('/');
+        }
+
+        if (props.admin) {
+            props.history.push('/');
+        }
+    }, []);
+
     // componentDidUpdate
     useEffect(() => {
         setErrors(props.errors);
