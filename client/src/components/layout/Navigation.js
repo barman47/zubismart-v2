@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import M from 'materialize-css';
 import PropTypes from 'prop-types';
 
-import logo from '../../assets/img/zubismart-2.png';
+import logo from '../../assets/img/logo.png';
 
 import isEmpty from '../../validation/is-empty';
 import capitalize from '../../utils/capitalize';

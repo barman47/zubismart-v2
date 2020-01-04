@@ -28,6 +28,7 @@ header {
     section div:first-child input[type=search] {
         align-self: center;
         background-color: darken($off-white, 5%);
+        border: none;
         border-radius: 3px;
         padding-left: $xs;    
         padding-right: $xs;    
@@ -53,9 +54,9 @@ header {
         border: none;
         cursor: pointer;
         margin-left: -2rem;
-        margin-top: -0.6rem;
-        height: 64%;
-        padding: $xs $normal;
+        margin-top: -0.55rem;
+        height: 61%;
+        padding: 0 $normal;
         border-top-right-radius: 3px;
         border-bottom-right-radius: 3px;
         transition: 0.2s linear all;
@@ -203,6 +204,14 @@ header {
 
     nav, .grid-item {
         display: none !important;
+    }
+}
+
+@media (max-width: $md-breakpoint) {
+    .brand-logo {
+        float: right;
+        margin: 0 auto;
+        width: $xlg;
     }
 }
 
