@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import M from 'materialize-css';
 import PropTypes from 'prop-types';
 
@@ -8,6 +8,7 @@ import logo from '../../assets/img/logo.png';
 
 import isEmpty from '../../validation/is-empty';
 import capitalize from '../../utils/capitalize';
+import firstName from '../../utils/firstName';
 
 import { logoutAdmin } from '../../actions/adminActions';
 import { logoutUser } from '../../actions/userActions';
@@ -62,7 +63,7 @@ class Navigation extends Component {
     onLogoutClick = (useCase) => {
         switch (useCase) {
             case 'admin':
-                this.props.logoutAdmin();
+                this.props.logoutAdmin(this.props.history);
                 this.setState({ showDropdown: false });
                 break;
             
@@ -115,14 +116,14 @@ class Navigation extends Component {
                 </Link>
                 {showDropdown ? (
                     <ul onMouseLeave={this.hideDropdown} className="account-dropdown">
-                        <li className="greeting">{user && (`Hi, ${capitalize(user.firstName)} !`)}</li>
+                        <li className="greeting">{admin && (`Hi, ${firstName(admin.name)} !`)}</li>
                         <li className="divider"></li>
-                        <li><Link to="/account/profile"><span className="mdi mdi-account-outline dropdown-icon"></span>My Profile</Link></li>
-                        {/* <li><Link to="/account/orders"><span className="mdi mdi-bookmark-check dropdown-icon"></span>My Orders</Link></li>
-                        <li><Link to="/account/favourites"><span className="mdi mdi-heart-outline dropdown-icon"></span>My Saved Items</Link></li>
-                        <li><Link to="/account/wallet"><span className="mdi mdi-wallet-outline dropdown-icon"></span>My Wallet</Link></li> */}
+                        <li><Link to="/admin/products"><span className="mdi mdi-view-dashboard dropdown-icon"></span>Dashboard</Link></li>
+                        <li><Link to="/admin/products/orders"><span className="mdi mdi-bookmark-check dropdown-icon"></span>Orders</Link></li>
+                        <li><Link to="/admin/users/all"><span className="mdi mdi-account-group-outline dropdown-icon"></span>Users</Link></li>
+                        <li><Link to="/admin/profile"><span className="mdi mdi-account-outline dropdown-icon"></span>Profile</Link></li>
                         <li className="divider"></li>
-                        <li><button className="logout-button" onClick={() => this.onLogoutClick('admin')} href="#"><span className="mdi mdi-logout dropdown-icon"></span>Logout Admin</button></li>
+                        <li><button className="logout-button" onClick={() => this.onLogoutClick('admin')} href="#"><span className="mdi mdi-logout dropdown-icon"></span>Logout</button></li>
                     </ul>
                 ) : null }
             </>
@@ -197,4 +198,4 @@ const mapStateToProps = state => ({
     user: state.user
 });
 
-export default connect(mapStateToProps, { logoutAdmin, logoutUser })(Navigation);
+export default connect(mapStateToProps, { logoutAdmin, logoutUser })(withRouter(Navigation));

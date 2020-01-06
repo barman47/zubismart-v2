@@ -76,6 +76,7 @@ router.put('/update/:id', passport.authenticate('jwt-admin', { session: false })
 // @desc Add new Product
 // @access Private
 router.post('/add', passport.authenticate('jwt-admin', { session: false }), (req, res) => {
+    console.log(req.files);
     const { errors, isValid } = validateAddProduct(req.body);   
     let uploadPath = `${__dirname}../../../client/build/uploads/`;
     try {
@@ -85,7 +86,7 @@ router.post('/add', passport.authenticate('jwt-admin', { session: false }), (req
         }
 
         if (req.files === null) {
-            errors.image = 'Item image is required';
+            errors.image = 'Product image is required';
             return res.statsu(400).json(errors)
         }
 
@@ -131,7 +132,7 @@ router.post('/add', passport.authenticate('jwt-admin', { session: false }), (req
             })
             .catch(err => console.log(err));
     } catch (err) {
-        errors.image = 'item image is required';
+        errors.image = 'Product image is required';
         return res.status(400).json(errors);
     }
 });

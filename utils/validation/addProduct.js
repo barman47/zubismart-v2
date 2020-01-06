@@ -22,7 +22,7 @@ module.exports = (data) => {
     }
 
     if (!Validator.isNumeric(data.price)) {
-        errors.price = 'Invalid Price';
+        errors.price = 'Invalid Price! Price must be a number without commas.';
     }
 
     if (Validator.isEmpty(data.name)) {

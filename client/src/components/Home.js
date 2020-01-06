@@ -11,7 +11,7 @@ import Discount from './Discount';
 
 const Home = () => (
     <>
-        <Helmet><title>Home | Zubismart</title></Helmet>
+        <Helmet><title>Home | Zubismart.com</title></Helmet>
         <main>
             <Slider />
             <Advert />

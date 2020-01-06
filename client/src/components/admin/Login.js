@@ -31,7 +31,7 @@ const Login = (props) => {
         }
 
         if (admin) {
-            history.push('/admin/dashboard');
+            history.push('/admin/products');
         }
     }, [props]);
 

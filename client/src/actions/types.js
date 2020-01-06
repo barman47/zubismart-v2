@@ -3,5 +3,7 @@ export const GET_ERRORS = 'GET_ERRORS';
 export const LOAD_QUIZ = 'LOAD_QUIZ';
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 export const SET_ADMIN = 'SET_ADMIN';
+export const PRODUCT_ADDED = 'ADD_PRODUCT_ADDED';
+export const SET_PRODUCTS = 'SET_PRODUCTS';
 export const REQUEST_SUCCESS = 'REQUEST_SUCCESS';
 export const ADDRESS_UPDATED = 'ADDRESS_UPDATED';
