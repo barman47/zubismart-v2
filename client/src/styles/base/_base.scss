@@ -2,12 +2,62 @@
     margin: 0;
     padding: 0;
     font-size: 16px;
+    box-sizing: border-box;
 }
 
 body {
     color: $off-black;
     font-family: $quicksand;
     overflow-x: hidden;
+}
+
+.price-icon {
+    font-size: 1.6rem;
+}
+
+.cart-icon {
+    color: $white;
+    font-size: $sm;
+}
+
+.btn-floating.halfway-fab {
+    background-color: $orange;
+    font-size: $md;
+    text-align: center;
+    transition: 0.3s linear all;
+}
+
+.btn-floating.halfway-fab:hover {
+    background-color: darken($orange, 5%);
+}
+
+.cart-button {
+    background-color: transparent;
+    border-radius: 5px;
+    border: 1px solid $primary-color;
+    color: $primary-color;
+    cursor: pointer;
+    margin-bottom: $sm;
+    // width: 45px;
+    // height: 45px;
+    // position: relative;
+    // top: -20;
+    // top: -11rem;
+    // left: 13.5rem;
+    padding: $normal 0;
+    width: 100%;
+    transition: 0.3s linear all;
+
+    span {
+        margin-right: $sm;
+        font-size: $sm;
+    }
+}
+
+.cart-button:hover {
+    background-color: $primary-color;
+    box-shadow: $shadow;
+    color: $off-white;
 }
 
 .valid-text {
@@ -44,28 +94,28 @@ input {
 }
 
 /* label focus color */
-.input-field input[type=text]:focus + label {
+.input-field input[type=text]:focus + label, .input-field input[type=email]:focus + label, .input-field input[type=password]:focus + label, .input-field textarea:focus + label {
     color: $blue !important;
 }
 
 /* label underline focus color */
-.input-field input[type=text]:focus, .input-field input[type=email]:focus, .input-field input[type=password]:focus {
+.input-field input[type=text]:focus, .input-field input[type=email]:focus, .input-field input[type=password]:focus, .input-field textarea:focus {
     border-bottom: 1px solid $blue !important;
     box-shadow: 0 1px 0 0 $blue !important;
 }
 
-.input-field input[type=text].valid + label, .input-field input[type=email].valid + label, .input-field input[type=password].valid + label {
+.input-field input[type=text].valid + label, .input-field input[type=email].valid + label, .input-field input[type=password].valid + label, textarea.valid + label {
     color: $blue !important;
 }
 
 /* valid color */
-.input-field input[type=text].valid, .input-field input[type=email].valid, .input-field input[type=password].valid {
+.input-field input[type=text].valid, .input-field input[type=email].valid, .input-field input[type=password].valid, .input-field textarea.valid {
     border-bottom: 1px solid $success-text !important;
     box-shadow: 0 1px 0 0 0 $success-text !important;
 }
 
 /* invalid color */
-.input-field input[type=text].invalid, .input-field input[type=email].invalid, .input-field input[type=password].invalid {
+.input-field input[type=text].invalid, .input-field input[type=email].invalid, .input-field input[type=password].invalid, .input-field textarea.invalid {
     border-bottom: 1px solid $error-text !important;
     box-shadow: 0 1px 0 0 $error-text !important;
 }

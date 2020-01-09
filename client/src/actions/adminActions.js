@@ -207,7 +207,7 @@ export const setCurrentAdmin = (decoded) => {
     };
 }
 
-export const logoutAdmin = (history) => (dispatch) => {
+export const logoutAdmin = () => (dispatch) => {
     localStorage.removeItem('jwtAdminToken');
     setAuthToken(false);
     dispatch(setCurrentAdmin(null));
@@ -215,5 +215,4 @@ export const logoutAdmin = (history) => (dispatch) => {
         html: 'Admin logged out Successfully',
         classes: 'toast-valid'
     });
-    history.push('/');
 };

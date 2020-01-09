@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import M from 'materialize-css';
 import PropTypes from 'prop-types';
 
@@ -63,7 +63,7 @@ class Navigation extends Component {
     onLogoutClick = (useCase) => {
         switch (useCase) {
             case 'admin':
-                this.props.logoutAdmin(this.props.history);
+                this.props.logoutAdmin();
                 this.setState({ showDropdown: false });
                 break;
             
@@ -156,6 +156,7 @@ class Navigation extends Component {
                 <nav>
                     <div className="nav-wrapper">
                         <ul className="hide-on-med-and-down">
+                            <li><Link to="">Services</Link></li>
                             <li><Link to="">Fashion</Link></li>
                             <li><Link to="">Gadgets</Link></li>
                             <li><Link to="">Cosmetics</Link></li>
@@ -165,13 +166,13 @@ class Navigation extends Component {
                             <li><Link to="">Books</Link></li>
                             <li><Link to="">Events</Link></li>
                             <li><Link to="">Others</Link></li>
-                            <li><Link to="">Services</Link></li>
                         </ul>
                     </div>
                 </nav>
                 <ul id="mobile-menu" className="sidenav">
                     <li><Link to="/">Home</Link></li>
                     <li className="divider"></li>
+                    <li><Link to="">Services</Link></li>
                     <li><Link to="">Fashion</Link></li>
                     <li><Link to="">Gadgets</Link></li>
                     <li><Link to="">Cosmetics</Link></li>
@@ -181,7 +182,6 @@ class Navigation extends Component {
                     <li><Link to="">Books</Link></li>
                     <li><Link to="">Events</Link></li>
                     <li><Link to="">Others</Link></li>
-                    <li><Link to="">Services</Link></li>
                 </ul>
             </>
         );
@@ -198,4 +198,4 @@ const mapStateToProps = state => ({
     user: state.user
 });
 
-export default connect(mapStateToProps, { logoutAdmin, logoutUser })(withRouter(Navigation));
+export default connect(mapStateToProps, { logoutAdmin, logoutUser })(Navigation);

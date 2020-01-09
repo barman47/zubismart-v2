@@ -3,16 +3,22 @@ import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Skeleton from 'react-loading-skeleton';
+import M from 'materialize-css';
+import numeral from 'numeral';
+import Moment from 'react-moment';
 
 import AdminBreadCrumb from '../common/AdminBreadCrumb';
 
-import { getProducts } from '../../actions/productsActions';
+import { deleteProduct, getProducts, toggleProduct } from '../../actions/productsActions';
+import isEmpty from '../../validation/is-empty';
 
 class AdminDashboard extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            products: {}
+            product: {},
+            products: []
         };
     }
 
@@ -20,11 +26,58 @@ class AdminDashboard extends Component {
         this.props.getProducts();
     }
 
+    UNSAFE_componentWillReceiveProps (nextProps) {
+        const { products } = nextProps;
+        if (products.products.length > 0 ) {
+            this.setState({ products: products.products });
+            if (!isEmpty(products.product)) {
+                M.toast({
+                    html: products.product.enabled ? `Product Enabled` : 'Product Disabled',
+                    classes: 'toast-valid'
+                });
+            }
+        }
+    }
+
+    deleteProduct = (id) => {
+        this.props.deleteProduct(id);
+    }
+
+    toggleProduct = (id) => {
+        this.props.toggleProduct(id);
+    }
+
     render () {
+        const { products } = this.state;
+
+        const productsToDisplay = this.state.products.map((product, index) => (
+            <tr key={index + 1}>
+                <td>{product.name || <Skeleton />}</td>
+                <td>{product.category || <Skeleton />}</td>
+                <td><span className="mdi mdi-currency-ngn"></span>{numeral(product.price).format('0,0') || <Skeleton />}</td>
+                <td>{<Moment format="Do MMMM, YYYY" date={product.dateAdded} /> || <Skeleton />}</td>
+                <td>
+                <label>
+                    <input 
+                        type="checkbox" 
+                        className="filled-in product-state" 
+                        defaultChecked={product.enabled}
+                        onChange={() => this.toggleProduct(product._id)}
+                    />
+                    <span></span>
+                </label>
+                    <span
+                        className="mdi mdi-delete action-icon"
+                        onClick={() => this.deleteProduct(product._id)}
+                    >
+                    </span>
+                </td>
+            </tr>
+        ));
         return (
             <>
                 <>
-                    <Helmet><title>Admin | Zubismart.com</title></Helmet>
+                    <Helmet><title>Admin - Products | Zubismart.com</title></Helmet>
                     <AdminBreadCrumb 
                         title="Products Information"
                         link="/admin/products"
@@ -61,8 +114,29 @@ class AdminDashboard extends Component {
                             </ul>
                         </div>
                     </section>
-                    <section className="main-content">
+                    <section className="main-content admin">
                         <h5>Admin Section</h5>
+                        {products.length > 0 ? (
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Category</th>
+                                        <th>Price</th>
+                                        <th>Date Added</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {productsToDisplay}
+                                </tbody>
+                            </table>
+                        ) : (
+                            <div className="no-products">
+                                <span className="mdi mdi-emoticon-tongue emoji"></span>
+                                <h1>No Products to Display</h1>
+                            </div>
+                        )}
                     </section>
                 </div>
             </>
@@ -75,7 +149,9 @@ const mapStateToProps = (state) => ({
 });
 
 AdminDashboard.propTypes = {
+    deleteProduct: PropTypes.func.isRequired,
+    toggleProduct: PropTypes.func.isRequired,
     getProducts: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps, { getProducts })(AdminDashboard);
+export default connect(mapStateToProps, { deleteProduct, getProducts, toggleProduct })(AdminDashboard);

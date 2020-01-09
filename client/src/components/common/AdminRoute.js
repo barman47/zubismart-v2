@@ -17,7 +17,7 @@ const AdminRoute = ({ component: Component, admin, ...rest }) => (
 );
 
 AdminRoute.propTypes = {
-    admin: PropTypes.object.isRequired
+    admin: PropTypes.object
 };
 
 const mapStateToProps = (state) => ({

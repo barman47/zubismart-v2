@@ -2,4 +2,44 @@
     .left-aside.admin {
         height: 32rem;
     }
+
+    .main-content.admin {
+
+    }
+
+    td input[type="checkbox"].filled-in+span:not(.lever):after {
+        margin-top: 6px;
+    }
+
+    td input[type="checkbox"].filled-in:checked+span:not(.lever):before {
+        top: 5px;
+    }
+
+    td input[type="checkbox"].filled-in:checked+span:not(.lever):after {
+        border: none;
+        background-color: $primary-color;
+    }
+
+    td .action-icon {
+        color: lighten($off-black, 15%);
+        cursor: pointer;
+        font-size: $sm;
+    }
+
+    td .action-icon:hover {
+        color: $error-text;
+    }
+
+    .no-products {
+        color: $orange;
+        text-align: center;
+    }
+
+    .no-products .emoji {
+        font-size: $xxlg;
+    }
+
+    .no-products h1 {
+        margin-top: 0;
+    }
 }

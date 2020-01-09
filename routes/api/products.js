@@ -1,10 +1,13 @@
 const express = require('express');
 const passport = require('passport');
+const fs = require('fs');
 const router = express.Router();
 
 const Product = require('../../models/Product');
 
 const validateAddProduct = require('../../utils/validation/addProduct');
+
+let uploadPath = `${__dirname}../../../client/build/uploads`;
 
 // Find products
 // @route GET /api/products/all
@@ -13,6 +16,25 @@ const validateAddProduct = require('../../utils/validation/addProduct');
 router.get('/all', (req, res) => {
     let errors = {};
     Product.find()
+        .then(products => {
+            if (products.length < 1) {
+                errors.products = 'No Products at this time';
+                return res.status(404).json(errors);
+            }
+            res.json(products);
+        })
+        .catch(err => console.log(err));
+});
+
+// Find products for homepage
+// @route GET /api/products/home
+// @desc Find 8 products
+// @access Public
+router.get('/home', (req, res) => {
+    let errors = {};
+    Product.find({ enabled: true })
+        .limit(8)
+        .sort({ dateAdded: -1 })
         .then(products => {
             if (products.length < 1) {
                 errors.products = 'No Products at this time';
@@ -37,17 +59,6 @@ router.get('/:category', (req, res) => {
             }
             res.json(products);
         })
-        .catch(err => console.log(err));
-});
-
-
-// Remove Product
-// @route GET /api/products/remove/:id
-// @desc Remove Product By Id
-// @access Private
-router.get('/remove/:id', passport.authenticate('jwt-admin', { session: false }), (req, res) => {
-    Product.findOneAndRemove({ _id: req.params.id })
-        .then(res.json({ msg: 'Product Successfully removed' }))
         .catch(err => console.log(err));
 });
 
@@ -76,9 +87,7 @@ router.put('/update/:id', passport.authenticate('jwt-admin', { session: false })
 // @desc Add new Product
 // @access Private
 router.post('/add', passport.authenticate('jwt-admin', { session: false }), (req, res) => {
-    console.log(req.files);
     const { errors, isValid } = validateAddProduct(req.body);   
-    let uploadPath = `${__dirname}../../../client/build/uploads/`;
     try {
         const image = req.files.image;
         if (!isValid) {
@@ -92,7 +101,7 @@ router.post('/add', passport.authenticate('jwt-admin', { session: false }), (req
 
 
         if (process.env.NODE_ENV !== 'production') {
-            uploadPath = `${__dirname}../../../client/public/uploads/`;
+            uploadPath = `${__dirname}../../../client/public/uploads`;
         }
 
         Product.findOne({ image: image.name })
@@ -102,7 +111,7 @@ router.post('/add', passport.authenticate('jwt-admin', { session: false }), (req
                     return res.status(406).json(errors);
                 }
 
-                image.mv(`${uploadPath}${image.name}`, (err => {
+                image.mv(`${uploadPath}/${image.name}`, (err => {
                     if (err) {
                         console.log(err);
                         return res.status(500).json({ msg: 'Upload failed.' });
@@ -118,7 +127,6 @@ router.post('/add', passport.authenticate('jwt-admin', { session: false }), (req
                         .then(savedProduct => {
                             const newProduct = {
                                 id: savedProduct.id,
-                                user: savedProduct.user,
                                 category: savedProduct.category,
                                 description: savedProduct.description,
                                 price: savedProduct.price,
@@ -135,6 +143,45 @@ router.post('/add', passport.authenticate('jwt-admin', { session: false }), (req
         errors.image = 'Product image is required';
         return res.status(400).json(errors);
     }
+});
+
+// Remove Product
+// @route GET /api/products/remove/all
+// @desc Remove all products
+// @access Private
+router.put('/toggleProduct/:id', passport.authenticate('jwt-admin', { session: false }), (req, res) => {
+    Product.findOne({ _id: req.params.id })
+        .then(product => {
+            product.enabled = !product.enabled;
+            product.save()
+                .then(updatedProduct => {
+                    res.json(updatedProduct);
+                })
+                .catch(err => console.error(err));
+        })
+        .catch(err => console.error(err));
+});
+
+// Remove Product
+// @route DELETE /api/products/delete/:id
+// @desc Remove Product By Id
+// @access Private
+router.delete('/delete/:id', passport.authenticate('jwt-admin', { session: false }), (req, res) => {
+    if (process.env.NODE_ENV !== 'production') {
+        uploadPath = `${__dirname}../../../client/public/uploads`;
+    }
+
+    Product.findOneAndRemove({ _id: req.params.id })
+        .then(deletedProduct => {
+            fs.unlink(`${uploadPath}/${deletedProduct.image}`, (err) => {
+                if (err) {
+                    console.error(err);
+                    return res.status(500).json({ msg: 'Server Error' });
+                }
+                res.json(deletedProduct)
+            });
+        })
+        .catch(err => console.log(err));
 });
 
 // Remove Product

@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { connect } from 'react-redux';
-import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom';
 import classnames from 'classnames';
 import axios from 'axios';
 import M from 'materialize-css';
-
-import isEmpty from '../../validation/is-empty';
-import { clearErrors } from '../../actions/productsActions';
 
 import TextInput from '../input-group/TextInput';
 
@@ -25,21 +20,9 @@ const AddProduct = (props) => {
     // componentDidMount
     useEffect(() => {
         const elems = document.querySelectorAll('select');
-        //eslint-disable-next-line
+        // eslint-disable-next-line
         const instances = M.FormSelect.init(elems, {});
-
-        const elems2 = document.querySelectorAll('.tooltipped');
-        const instances2 = M.Tooltip.init(elems, {
-            position: 'top'
-        });
     }, []);
-
-    // componentWillReceiveProps
-    useEffect(() => {
-        if (!isEmpty(props.errors)) {
-            setErrors(props.errors);
-        }
-    }, [props.errors]);
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
@@ -50,8 +33,6 @@ const AddProduct = (props) => {
         product.append('category', category);
         product.append('price', price);
         product.append('image', image);
-
-        console.log(product);
 
         axios.post('/api/products/add', product, {
             headers: {
@@ -64,6 +45,7 @@ const AddProduct = (props) => {
                 M.toast({
                     html: 'Product Added Successfully',
                     classes: 'toast-valid',
+                    displayLength: 5000,
                     completeCallback: () => {
                         setUploadProgress(0);
                         setName('');
@@ -73,11 +55,16 @@ const AddProduct = (props) => {
                         setImage('');
                         setErrors({});
                         document.querySelector('.add-product-form').reset();
+
+                        const elems = document.querySelectorAll('select');
+                        // eslint-disable-next-line
+                        const instances = M.FormSelect.init(elems, {});
                     }
                 });
             })
             .catch(err => {
                 setErrors(err.response.data);
+                setUploadProgress(0);
             });
     };
 
@@ -91,9 +78,9 @@ const AddProduct = (props) => {
                     <div>
                         <h6><span className="mdi mdi-account mdi-24px profile-icon"></span>Products &amp; Services</h6>
                         <ul>
-                            <li><Link to="/admin/products" style={{ color: '#a7b018', fontWeight: 'bold' }}>Products</Link></li>
+                            <li><Link to="/admin/products">Products</Link></li>
                             <li><Link to="/admin/services">Services</Link></li>
-                            <li><Link to="/admin/products/add">Add Product</Link></li>
+                            <li><Link to="/admin/products/add" style={{ color: '#a7b018', fontWeight: 'bold' }}>Add Product</Link></li>
                             <li><Link to="/admin/services/add">Add Service</Link></li>
                         </ul>
                     </div>
@@ -117,12 +104,11 @@ const AddProduct = (props) => {
                     </div>
                 </section>
                 <section className="main-content">
-                    <h5>Admin Section</h5>
+                    <h5>Add New Product</h5>
                     <form className="add-product-form" onSubmit={handleFormSubmit}>
-                        <h3>Add New Product</h3>
                         <div className="row">
                             <div className="input-field col s12">
-                                <span className="mdi mdi-account prefix"></span>
+                                <span className="mdi mdi-shopping-outline prefix"></span>
                                 <select 
                                     data-tooltip="Product Category is required"
                                     className="tooltipped"
@@ -146,7 +132,7 @@ const AddProduct = (props) => {
                         </div>
 
                         <TextInput 
-                            icon="mdi mdi-account"
+                            icon="mdi mdi-alphabetical-variant"
                             label="Product Name"
                             id="name"
                             value={name}
@@ -157,35 +143,36 @@ const AddProduct = (props) => {
                         />
 
                         <TextInput 
-                            icon="mdi mdi-account"
+                            icon="mdi mdi-currency-ngn"
                             label="Product Price"
                             id="price"
                             value={price}
                             onChange={(e) => setPrice(e.target.value)}
                             errorMessage={errors.price}
-                            info="Product price in &#x20A6;"
+                            info="Product price in naira (&#x20A6;)"
                             title="Product price is required"
                         />
                         <div className="row">
-                            <div className="col s12 input-field">
+                            <div className="input-field col s12">
+                                <span className="mdi mdi-alphabetical prefix"></span>
                                 <textarea 
                                     id="description" 
-                                    className={classnames('materialize-textarea form-input input-field'), {
+                                    className={classnames('materialize-textarea validate', {
                                         'invalid': errors.description
-                                    }}
+                                    })}
                                     value={description}
                                     onChange={(e) => setDescription(e.target.value)}
                                 >
+
                                 </textarea>
                                 <label htmlFor="description">Product Description</label>
                                 <span className="helper-text">Product description should contain vital and descriptive information about the product</span>
                                 {errors.description ? (<span className="helper-text invalid-text">{errors.description}</span>) : null}
                             </div>
-                        </div>
-
+                        </div>        
                         <div className="row">
                             <div className="file-field input-field">
-                                <div className="btn">
+                                <div className="btn add-image-button">
                                     <span>Add Image</span>
                                     <input
                                         type="file" 
@@ -199,14 +186,23 @@ const AddProduct = (props) => {
                                         className={classnames('file-path form-input validate', {
                                             'invalid': errors.image
                                         })}
-                                        value={image}
                                         onChange={(e) => setImage(e.target.files[0])}
                                     />
                                     {errors.image ? (<span className="helper-text invalid-text">{errors.image}</span>) : null}
                                 </div>
                             </div>
                         </div>
-                        <div className="upload-progress" style={{ style: `${Math.round(uploadProgress, 2)}` }} /*style={{width: Math.round(uploadProgress, 2)}}*/>{Math.round(uploadProgress, 2)}%</div>
+                        <div className="progress-container">
+                            <div className="upload-progress" style={{ width: `${Math.round(uploadProgress, 2)}%` }}>
+                                {
+                                    Math.round(uploadProgress, 2) ?
+                                    Math.round(uploadProgress, 2)
+                                    :
+                                    null   
+                                }
+                            </div>
+                        </div>
+                        
                         <button className="btn btn-large add-product">Add Product</button>
                     </form>
                 </section>
@@ -215,12 +211,4 @@ const AddProduct = (props) => {
     );
 };
 
-const mapStateToProps = state => ({
-    errors: state.errors
-});
-
-AddProduct.propTypes = {
-    clearErrors: PropTypes.func.isRequired
-};
-
-export default connect(mapStateToProps, { clearErrors })(AddProduct);
+export default AddProduct;

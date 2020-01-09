@@ -53,6 +53,7 @@ const Login = (props) => {
                     <h3>Admin Login</h3>
                     <TextInput
                         type="email"
+                        id="email"
                         label="Enter Admin Email"
                         icon="mdi mdi-account-outline"
                         name="email"
@@ -62,6 +63,7 @@ const Login = (props) => {
                     />
                     <TextInput
                         type="password"
+                        id="password"
                         label="Enter Password"
                         icon="mdi mdi-lock-outline"
                         name="password"

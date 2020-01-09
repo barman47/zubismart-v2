@@ -1,30 +1,84 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import M from 'materialize-css';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import Skeleton from 'react-loading-skeleton';
+import numeral from 'numeral';
 
-const FeaturedProducts = () => {
-    return (
-        <div>
-            <h5 className="sub-header">Featured Products</h5>
-                {/* <div class="row">
-                        <div class="col s12 m6 l3">
-                            <div class="card medium hoverable">
-                                <div class="card-image">
-                                    <img src="data:image/jpeg;charset=utf-8;base64,{{base64ArrayBuffer this.image.data.buffer}}" alt="{{this.name}}" class="materialboxed" data-caption="{{this.name}}">
-                                    <span class="card-title">{{this.name}}</span>
-                                </div>
-                                <div class="card-content">
-                                    <p class="price"><span class="mdi mdi-currency-ngn">{{formatPrice this.price}}</span></p>
-                                </div>
-                                <div class="card-action product">
-                                    <p class="seller-label">Seller: <span class="product-info">{{this.userName}}</span></p>
-                                    <p class="seller-label">Contact: <span class="product-info">{{this.phone}}</span></p>
-                                    <p class="seller-label">Description: <span class="product-info">{{this.description}}</span></p>
-                                </div>
-                            </div>
+import { getHomepageProducts } from '../actions/productsActions';
+
+const FeaturedProducts = (props) => {
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    //componentDidMount
+    useEffect(() => {
+        props.getHomepageProducts();
+
+        const elems = document.querySelectorAll('.tooltipped');
+        // eslint-disable-next-line
+        const instances = M.Tooltip.init(elems, {});
+    }, []);
+
+    useEffect(() => {
+        if (props.products.products.length !== products.length) {
+            setProducts(props.products.products);
+            setLoading(false);
+        }
+    }, [props.products.products]);
+
+    let productsToDisplay;
+    if (loading === true) {
+        productsToDisplay = <Skeleton />
+    } else {
+        productsToDisplay = products.map((product) => (
+            <div className="col s12 m6 l3 product">
+                <Link to={`/products/${product._id}`}>
+                    <div className="card">
+                        <div className="card-image">
+                            <img src={`/uploads/${product.image}`}  alt={product.name} />  
+                            <button 
+                                className="btn-floating halfway-fab tooltipped"
+                                data-tooltip="Add to Cart"
+                                data-position="top"
+                            >
+                                <span 
+                                    className="mdi mdi-cart-plus cart-icon" 
+                                >
+                                </span>
+                            </button>
                         </div>
-                </div>
-                <h3 class="no-items">There are no Items for Sale.</h3> */}
+                        <div className="card-content">
+                            <h5>{product.name}</h5>
+                            <h6 className="truncate">{product.description}</h6>
+                        </div>
+                        <div className="card-action">
+                            <h5><span className="mdi mdi-currency-ngn price-icon"></span>{numeral(product.price).format('0,0')}</h5>
+                        </div>
+                    </div>
+                </Link>
+            </div>
+        ));
+    }
+
+    return (
+        <div style={{ border: '1px solid green' }}>
+            <h5 className="sub-header">Featured Products</h5>
+            <div className="products row">
+                {products ? productsToDisplay
+                 : <h1>No Products</h1>}
+            </div>
         </div>
     );
 };
 
-export default FeaturedProducts;
+const mapStateToProps = state => ({
+    products: state.products
+});
+
+FeaturedProducts.propTypes = {
+    getHomepageProducts: PropTypes.func.isRequired
+};
+
+export default connect(mapStateToProps, { getHomepageProducts })(FeaturedProducts);

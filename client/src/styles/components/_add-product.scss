@@ -3,17 +3,44 @@
 
     }
 
-    section.maoin-content {
+    section.main-content {
+        height: 100%;
+    }
 
+    section.main-content::-webkit-scrollbar {
+        display: none;
+    }
+
+    .progress-container {
+        background-color: transparentize($primary-color, 0.7);
+        margin-bottom: $sm;
+        width: 100%;
     }
 
     .upload-progress {
-        // height: $lg;
         color: $off-white;
         border-radius: 3px;
-        padding-top: $xs;
-        padding-bottom: $xs;
+        padding-top: 0.1rem;
+        padding-bottom: 0.1rem;
         text-align: center;
         background-color: $primary-color;
+    }
+
+    .add-image-button {
+        color: $primary-color;
+        background-color: transparent;
+        border: 1px solid $primary-color;
+        box-shadow: none;
+    }
+    .add-image-button:hover {
+        background-color: $primary-color;
+        color: $off-white;
+    }
+
+    .add-product {
+        background-color: $primary-color;
+    }
+    .add-product:hover {
+        background-color: darken($primary-color, 5%);
     }
 }

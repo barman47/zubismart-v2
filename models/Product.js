@@ -2,11 +2,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ProductSchema = new Schema({
-    user: {
-        type: Schema.Types.ObjectId,
-        ref: 'user'
-    },
-
     category: {
         type: String,
         required: true
@@ -29,6 +24,11 @@ const ProductSchema = new Schema({
 
     image: {
         type: String
+    },
+
+    enabled: {
+        type: Boolean,
+        default: true
     },
 
     dateAdded: {
