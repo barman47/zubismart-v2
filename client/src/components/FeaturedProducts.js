@@ -29,11 +29,11 @@ const FeaturedProducts = (props) => {
     }, [props.products.products]);
 
     let productsToDisplay;
-    if (loading === true) {
+    if (loading === true && products.length === 0) {
         productsToDisplay = <Skeleton />
-    } else {
+    } else if (loading === false && products.length > 0) {
         productsToDisplay = products.map((product) => (
-            <div className="col s12 m6 l3 product">
+            <div key={product._id} className="col s12 m6 l3 product">
                 <Link to={`/products/${product._id}`}>
                     <div className="card">
                         <div className="card-image">
@@ -60,14 +60,15 @@ const FeaturedProducts = (props) => {
                 </Link>
             </div>
         ));
+    } else {
+        productsToDisplay = (<h1>No Products to Display</h1>);
     }
 
     return (
-        <div style={{ border: '1px solid green' }}>
+        <div>
             <h5 className="sub-header">Featured Products</h5>
             <div className="products row">
-                {products ? productsToDisplay
-                 : <h1>No Products</h1>}
+                {productsToDisplay}
             </div>
         </div>
     );

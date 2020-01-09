@@ -35,10 +35,8 @@ export const getProducts = () => dispatch => {
 };
 
 export const getHomepageProducts = () => dispatch => {
-    console.log('fetching products');
     axios.get('/api/products/home')
         .then(res => {
-            console.log(res.data);
             dispatch({
                 type: SET_PRODUCTS,
                 payload: res.data
