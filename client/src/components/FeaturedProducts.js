@@ -22,8 +22,10 @@ const FeaturedProducts = (props) => {
     }, []);
 
     useEffect(() => {
-        if (props.products.products.length !== products.length) {
+        if (props.products.products.length !== 0) {
             setProducts(props.products.products);
+            setLoading(false);
+        } else {
             setLoading(false);
         }
     }, [props.products.products]);

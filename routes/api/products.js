@@ -33,16 +33,15 @@ router.get('/all', (req, res) => {
 router.get('/home', (req, res) => {
     let errors = {};
     Product.find({ enabled: true })
+        .sort({ dateAdded: 'desc', test: -1 })
         .limit(8)
-        .sort({ dateAdded: -1 })
-        .then(products => {
-            if (products.length < 1) {
+        .exec((err, products) => {
+            if (err) {
                 errors.products = 'No Products at this time';
-                return res.status(404).json(errors);
+                return res.status(404).json(errors); 
             }
             res.json(products);
-        })
-        .catch(err => console.log(err));
+        });
 });
 
 // Find products
@@ -73,6 +72,7 @@ router.put('/update/:id', passport.authenticate('jwt-admin', { session: false })
             product.description = req.body.description;
             product.price = req.body.price;
             product.name = req.body.name;
+            product.brand = req.body.brand;
 
             product.save()
                 .then(updatedProduct => res.json(updatedProduct))
@@ -131,6 +131,7 @@ router.post('/add', passport.authenticate('jwt-admin', { session: false }), (req
                                 description: savedProduct.description,
                                 price: savedProduct.price,
                                 name: savedProduct.name,
+                                brand: savedProduct.brand,
                                 image: savedProduct.image
                             };
                             res.json(newProduct);

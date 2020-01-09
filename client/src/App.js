@@ -11,6 +11,7 @@ import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import LoginAdmin from './components/admin/Login';
 import AdminDashboard from './components/admin/AdminDashboard';
+import AddBrand from './components/admin/AddBrand';
 import Profile from './components/user/Profile';
 import Address from './components/user/Address';
 
@@ -73,6 +74,9 @@ class App extends Component {
 							</Switch>
 							<Switch>
 								<AdminRoute path="/admin/products/add" exact component={AddProduct} />
+							</Switch>
+							<Switch>
+								<AdminRoute path="/admin/brands/add" exact component={AddBrand} />
 							</Switch>
 							<Switch>
 								<PrivateRoute path="/account/profile" exact component={Profile} />

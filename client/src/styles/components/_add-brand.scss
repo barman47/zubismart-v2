@@ -1,0 +1,73 @@
+.brand {
+    font-family: $quicksand;
+
+    .brand-form {
+        background-color: $white;
+        border-radius: $radius;
+        // border: 1px solid darken($off-white, 15%);
+        margin: $lg auto;
+        width: 70%;
+        padding: $xs $md $sm $md;
+    }
+
+    .brand-form h3 {
+        color: $off-black;
+        border-bottom: 1px solid darken($off-white, 15%);
+        font-size: $md;
+        padding-bottom: $sm;
+        text-align: center;
+    }
+
+    button {
+        border: none;
+        border-radius: $radius;
+        color: $off-white;
+        cursor: pointer;
+        font-family: $quicksand;
+        padding: $normal 0;
+        width: 100%;
+        transition: 0.3s linear all;
+    }
+
+    button[type=submit] {
+        background-color: $orange;
+    }
+    button[type=submit]:hover {
+        background-color: darken($orange, 5%);
+        box-shadow: $shadow;
+    }
+
+    p {
+        text-align: center;
+    }
+
+    button.brand {
+        background-color: $green;
+        margin-top: $sm;
+    }
+    button.brand:hover {
+        background-color: darken($green, 5%);
+        box-shadow: $shadow;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+}
+
+@media (max-width: $lg-breakpoint) {
+    .brand-form {
+        width: 70% !important;
+    }
+}
+
+@media (max-width: $md-breakpoint) {
+    .brand-form {
+        width: 90vw !important;
+        padding-bottom: $lg !important;
+    }
+
+    .brand-form h3 {
+        font-size: $sm !important;
+    }
+}

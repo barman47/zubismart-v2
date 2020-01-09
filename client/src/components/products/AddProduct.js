@@ -4,6 +4,10 @@ import { Link } from 'react-router-dom';
 import classnames from 'classnames';
 import axios from 'axios';
 import M from 'materialize-css';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
+import { getBrands } from '../../actions/brandActions';
 
 import TextInput from '../input-group/TextInput';
 
@@ -12,6 +16,8 @@ const AddProduct = (props) => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [category, setCategory] = useState('');
+    const [brand, setBrand] = useState('');
+    const [brands, setBrands] = useState([]);
     const [price, setPrice] = useState('');
     const [image, setImage] = useState('');
     const [errors, setErrors] = useState({});
@@ -22,7 +28,18 @@ const AddProduct = (props) => {
         const elems = document.querySelectorAll('select');
         // eslint-disable-next-line
         const instances = M.FormSelect.init(elems, {});
+
+        props.getBrands();
     }, []);
+
+    useEffect(() => {
+        if (props.brands.length > 0) {
+            setBrands(props.brands);
+            const elems = document.querySelectorAll('select');
+            // eslint-disable-next-line
+            const instances = M.FormSelect.init(elems, {});
+        }
+    }, [props.brands]);
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
@@ -68,6 +85,19 @@ const AddProduct = (props) => {
             });
     };
 
+    let brandsToDisplay;
+
+    if (brands.length > 0) {
+        brandsToDisplay = brands.map(brand => (
+            <option key={brand._id} value={brand.name}>{brand.name}</option>
+        ));
+        const elems = document.querySelectorAll('select');
+        // eslint-disable-next-line
+        const instances = M.FormSelect.init(elems, {});
+    } else {
+        brandsToDisplay = (<option value=""  disabled>No Brands Available</option>);
+    }
+
     return (
         <>
             <>
@@ -82,6 +112,7 @@ const AddProduct = (props) => {
                             <li><Link to="/admin/services">Services</Link></li>
                             <li><Link to="/admin/products/add" style={{ color: '#a7b018', fontWeight: 'bold' }}>Add Product</Link></li>
                             <li><Link to="/admin/services/add">Add Service</Link></li>
+                            <li><Link to="/admin/brands/add">Add Brand</Link></li>
                         </ul>
                     </div>
                     <div>
@@ -128,6 +159,21 @@ const AddProduct = (props) => {
                                 </select>
                                 <label htmlFor="category">Product Category</label>
                                 {errors.category ? (<span className="helper-text invalid-text">{errors.category}</span>) : null}
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="input-field col s12">
+                                <span className="mdi mdi-shopify prefix"></span>
+                                <select 
+                                    id="brands"
+                                    value={brand}
+                                    onChange={(e) => setBrand(e.target.value)}
+                                >
+                                    <option value="" defaultChecked disabled>Select Product Brand</option>
+                                    {brandsToDisplay}
+                                </select>
+                                <label htmlFor="category">Product Brand</label>
+                                {errors.brand ? (<span className="helper-text invalid-text">{errors.brand}</span>) : null}
                             </div>
                         </div>
 
@@ -211,4 +257,12 @@ const AddProduct = (props) => {
     );
 };
 
-export default AddProduct;
+const mapStateToProps = state => ({
+    brands: state.brands
+});
+
+AddProduct.propTypes = {
+    getBrands: PropTypes.func.isRequired
+};
+
+export default connect(mapStateToProps, { getBrands })(AddProduct);

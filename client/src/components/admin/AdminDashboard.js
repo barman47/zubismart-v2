@@ -93,6 +93,7 @@ class AdminDashboard extends Component {
                                 <li><Link to="/admin/services">Services</Link></li>
                                 <li><Link to="/admin/products/add">Add Product</Link></li>
                                 <li><Link to="/admin/services/add">Add Service</Link></li>
+                                <li><Link to="/admin/brands/add">Add Brand</Link></li>
                             </ul>
                         </div>
                         <div>
