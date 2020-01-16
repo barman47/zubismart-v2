@@ -17,6 +17,11 @@ const ProductSchema = new Schema({
         required: true
     },
 
+    shippingPrice: {
+        type: Number,
+        required: true
+    },
+
     name: {
         type: String,
         required: true

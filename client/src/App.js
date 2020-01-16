@@ -17,6 +17,8 @@ import Address from './components/user/Address';
 
 import AddProduct from './components/products/AddProduct';
 
+import AddService from './components/services/AddService';
+
 import AdminRoute from './components/common/AdminRoute'; 
 import PrivateRoute from './components/common/PrivateRoute'; 
 
@@ -74,6 +76,9 @@ class App extends Component {
 							</Switch>
 							<Switch>
 								<AdminRoute path="/admin/products/add" exact component={AddProduct} />
+							</Switch>
+							<Switch>
+								<AdminRoute path="/admin/services/add" exact component={AddService} />
 							</Switch>
 							<Switch>
 								<AdminRoute path="/admin/brands/add" exact component={AddBrand} />

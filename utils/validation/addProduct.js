@@ -7,6 +7,7 @@ module.exports = (data) => {
     data.category = !isEmpty(data.category) ?  data.category : '';
     data.description = !isEmpty(data.description) ?  data.description : '';
     data.price = !isEmpty(data.price) ?  data.price : '';
+    data.shippingPrice = !isEmpty(data.shippingPrice) ?  data.shippingPrice : '';
     data.name = !isEmpty(data.name) ?  data.name : '';
 
     if (Validator.isEmpty(data.category)) {
@@ -22,7 +23,15 @@ module.exports = (data) => {
     }
 
     if (!Validator.isNumeric(data.price)) {
-        errors.price = 'Invalid Price! Price must be a number without commas.';
+        errors.price = 'Invalid price! Price must be a number without commas.';
+    }
+
+    if (Validator.isEmpty(data.shippingPrice)) {
+        errors.shippingPrice = 'Item shipping Price is required!';
+    }
+
+    if (!Validator.isNumeric(data.shippingPrice)) {
+        errors.shippingPrice = 'Invalid shipping Price! shipping Price must be a number without commas.';
     }
 
     if (Validator.isEmpty(data.name)) {

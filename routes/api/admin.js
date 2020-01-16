@@ -65,8 +65,6 @@ router.post('/register', (req, res) => {
 // @desc Login Admin
 // @access Private
 router.post('/login', (req, res) => {
-    console.log('login admin');
-    console.log(req.body);
     const { errors, isValid } = validateAdminLogin(req.body);
 
     if (!isValid) {

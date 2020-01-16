@@ -6,7 +6,8 @@
     }
 
     .card .card-image img {
-        height: 15rem;
+        max-height: 15rem;
+        width: 100%;
     }
 
     .product .card:hover {

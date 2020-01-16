@@ -19,6 +19,7 @@ class Navigation extends Component {
         this.state = {
             admin: null,
             user: null,
+            cart: [],
             showDropdown: false
         };
     }
@@ -39,7 +40,7 @@ class Navigation extends Component {
     }
 
     UNSAFE_componentWillReceiveProps (nextProps) {
-        const { admin, user } = nextProps;
+        const { admin, user, cart } = nextProps;
         
         if(isEmpty(user.user)) {
             this.setState({ user: null });
@@ -51,6 +52,11 @@ class Navigation extends Component {
             this.setState({ admin: null });
         } else {
             this.setState({ admin });
+        }
+
+        if (cart.length !== this.state.cart.length) {
+            console.log('cart updated');
+            this.setState({ cart });
         }
     }
 
@@ -78,7 +84,7 @@ class Navigation extends Component {
     }
 
     render () {
-        const { showDropdown, user, admin } = this.state;
+        const { cart, showDropdown, user, admin } = this.state;
         let header = null;
 
         const guestHeader = (
@@ -102,7 +108,7 @@ class Navigation extends Component {
                         <li><Link to="/account/favourites"><span className="mdi mdi-heart-outline dropdown-icon"></span>My Saved Items</Link></li>
                         <li><Link to="/account/wallet"><span className="mdi mdi-wallet-outline dropdown-icon"></span>My Wallet</Link></li>
                         <li className="divider"></li>
-                        <li><button className="logout-button" onClick={() => this.onLogoutClick('user')} href="#"><span className="mdi mdi-logout dropdown-icon"></span>Logout</button></li>
+                        <li><button className="logout-button" onClick={(e) => this.onLogoutClick('user')} href="#"><span className="mdi mdi-logout dropdown-icon"></span>Logout</button></li>
                     </ul>
                 ) : null }
             </>
@@ -150,25 +156,30 @@ class Navigation extends Component {
                     </div>
                     <div>
                         {header}
-                        <Link to="/cart" className="grid-item"><span style={{ marginRight: '5px' }} className="mdi mdi-cart-outline mdi-12px left"></span>My Cart <span className="cart">0</span></Link>
+                        <Link to="/cart" className="grid-item">
+                            <span style={{ marginRight: '5px' }} className="mdi mdi-cart-outline mdi-12px left"></span>My Cart 
+                            <span className="cart">{cart.length}</span>
+                        </Link>
                     </div>
                 </section>
-                <nav>
-                    <div className="nav-wrapper">
-                        <ul className="hide-on-med-and-down">
-                            <li><Link to="">Services</Link></li>
-                            <li><Link to="">Fashion</Link></li>
-                            <li><Link to="">Gadgets</Link></li>
-                            <li><Link to="">Cosmetics</Link></li>
-                            <li><Link to="">Home/Office</Link></li>
-                            <li><Link to="">Groceries</Link></li>
-                            <li><Link to="">Babies</Link></li>
-                            <li><Link to="">Books</Link></li>
-                            <li><Link to="">Events</Link></li>
-                            <li><Link to="">Others</Link></li>
-                        </ul>
-                    </div>
-                </nav>
+                <div className="navbar-fixed">
+                    <nav>
+                        <div className="nav-wrapper">
+                            <ul className="hide-on-med-and-down">
+                                <li><Link to="">Services</Link></li>
+                                <li><Link to="">Fashion</Link></li>
+                                <li><Link to="">Gadgets</Link></li>
+                                <li><Link to="">Cosmetics</Link></li>
+                                <li><Link to="">Home/Office</Link></li>
+                                <li><Link to="">Groceries</Link></li>
+                                <li><Link to="">Babies</Link></li>
+                                <li><Link to="">Books</Link></li>
+                                <li><Link to="">Events</Link></li>
+                                <li><Link to="">Others</Link></li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
                 <ul id="mobile-menu" className="sidenav">
                     <li><Link to="/">Home</Link></li>
                     <li className="divider"></li>
@@ -195,7 +206,8 @@ Navigation.propTypes = {
 
 const mapStateToProps = state => ({
     admin: state.admin,
-    user: state.user
+    user: state.user,
+    cart: state.cart
 });
 
 export default connect(mapStateToProps, { logoutAdmin, logoutUser })(Navigation);

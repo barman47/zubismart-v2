@@ -1,4 +1,8 @@
 .dashboard {
+    section.left-aside.admin {
+
+    }
+
     section.main-content {
         height: 100%;
     }
@@ -33,10 +37,10 @@
         color: $off-white;
     }
 
-    .add-product {
+    .add-service {
         background-color: $primary-color;
     }
-    .add-product:hover {
+    .add-service:hover {
         background-color: darken($primary-color, 5%);
     }
 }

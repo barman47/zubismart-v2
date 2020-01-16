@@ -71,6 +71,7 @@ router.put('/update/:id', passport.authenticate('jwt-admin', { session: false })
             product.category = req.body.category;
             product.description = req.body.description;
             product.price = req.body.price;
+            product.shippingPrice = req.body.shippingPrice;
             product.name = req.body.name;
             product.brand = req.body.brand;
 
@@ -120,6 +121,7 @@ router.post('/add', passport.authenticate('jwt-admin', { session: false }), (req
                         category: req.body.category,
                         description: req.body.description,
                         price: req.body.price,
+                        shippingPrice: req.body.shippingPrice,
                         name: req.body.name,
                         image: image.name
                     });
@@ -130,6 +132,7 @@ router.post('/add', passport.authenticate('jwt-admin', { session: false }), (req
                                 category: savedProduct.category,
                                 description: savedProduct.description,
                                 price: savedProduct.price,
+                                shippingPrice: savedProduct.shippingPrice,
                                 name: savedProduct.name,
                                 brand: savedProduct.brand,
                                 image: savedProduct.image

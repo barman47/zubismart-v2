@@ -1,5 +1,12 @@
 header {
     background-color: $primary-color;
+    position: fixed;
+    top: 0;
+    z-index: 3;
+
+    .header-section {
+        width: 100vw;
+    }
 
     section {
         display: flex;
@@ -103,7 +110,7 @@ header {
         position: absolute;
         top: $lg;
         left: 78%;
-        z-index: 3;
+        z-index: 999;
     }
 
     section div:last-child .account-dropdown li {
@@ -150,6 +157,7 @@ header {
     .cart {
         background-color: $success-text;
         border-radius: 3px;
+        margin-left: $xs;
         padding: 0.2rem $xs;
     }
 

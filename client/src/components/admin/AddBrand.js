@@ -10,6 +10,7 @@ import { addBrand } from '../../actions/brandActions';
 import isEmpty from '../../validation/is-empty';
 
 import TextInput from '../input-group/TextInput';
+import AdminBreadCrumb from '../common/AdminBreadCrumb';
 
 const AddBrand = (props) => {
     const [name, setName] = useState('');
@@ -52,6 +53,11 @@ const AddBrand = (props) => {
         <>
             <>
                 <Helmet><title>Add Brand | Zubismart.com</title></Helmet>
+                <AdminBreadCrumb 
+                    title="Add Brand"
+                    link="/admin/brands/add"
+                    linkText="Brands"
+                />
             </>
             <div className="dashboard">
                 <section className="left-aside admin">

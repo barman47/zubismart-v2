@@ -10,3 +10,4 @@ export const SET_PRODUCTS = 'SET_PRODUCTS';
 export const SET_BRANDS = 'SET_BRANDS';
 export const REQUEST_SUCCESS = 'REQUEST_SUCCESS';
 export const ADDRESS_UPDATED = 'ADDRESS_UPDATED';
+export const ADD_TO_CART = 'ADD_TO_CART';

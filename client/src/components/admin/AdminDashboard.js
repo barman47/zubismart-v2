@@ -55,6 +55,7 @@ class AdminDashboard extends Component {
                 <td>{product.name || <Skeleton />}</td>
                 <td>{product.category || <Skeleton />}</td>
                 <td><span className="mdi mdi-currency-ngn"></span>{numeral(product.price).format('0,0') || <Skeleton />}</td>
+                <td><span className="mdi mdi-currency-ngn"></span>{numeral(product.shippingPrice).format('0,0') || <Skeleton />}</td>
                 <td>{<Moment format="Do MMMM, YYYY" date={product.dateAdded} /> || <Skeleton />}</td>
                 <td>
                 <label>
@@ -124,6 +125,7 @@ class AdminDashboard extends Component {
                                         <th>Name</th>
                                         <th>Category</th>
                                         <th>Price</th>
+                                        <th>Shipping Price</th>
                                         <th>Date Added</th>
                                         <th>Actions</th>
                                     </tr>

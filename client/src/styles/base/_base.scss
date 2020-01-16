@@ -31,33 +31,12 @@ body {
     background-color: darken($orange, 5%);
 }
 
-.cart-button {
-    background-color: transparent;
-    border-radius: 5px;
-    border: 1px solid $primary-color;
-    color: $primary-color;
-    cursor: pointer;
-    margin-bottom: $sm;
-    // width: 45px;
-    // height: 45px;
-    // position: relative;
-    // top: -20;
-    // top: -11rem;
-    // left: 13.5rem;
-    padding: $normal 0;
-    width: 100%;
-    transition: 0.3s linear all;
-
-    span {
-        margin-right: $sm;
-        font-size: $sm;
-    }
+ul.dropdown-content {
+    margin-top: 140px;
 }
 
-.cart-button:hover {
-    background-color: $primary-color;
-    box-shadow: $shadow;
-    color: $off-white;
+.dropdown-content li span {
+    color: $primary-color !important;
 }
 
 .valid-text {
@@ -139,6 +118,7 @@ div.breadcrumb::before {
 
 .breadcrumb {
     background-color: $off-white;
+    margin-top: 9.2rem;
     padding: $sm;
 
     h2 {

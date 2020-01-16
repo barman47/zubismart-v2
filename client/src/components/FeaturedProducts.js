@@ -7,6 +7,7 @@ import Skeleton from 'react-loading-skeleton';
 import numeral from 'numeral';
 
 import { getHomepageProducts } from '../actions/productsActions';
+import { addToCart } from '../actions/cartActions';
 
 const FeaturedProducts = (props) => {
     const [products, setProducts] = useState([]);
@@ -30,6 +31,11 @@ const FeaturedProducts = (props) => {
         }
     }, [props.products.products]);
 
+    const addToCart = (e, item) => {
+        e.preventDefault();
+        props.addToCart(item);
+    };
+
     let productsToDisplay;
     if (loading === true && products.length === 0) {
         productsToDisplay = <Skeleton />
@@ -47,6 +53,7 @@ const FeaturedProducts = (props) => {
                             >
                                 <span 
                                     className="mdi mdi-cart-plus cart-icon" 
+                                    onClick={(e) => addToCart(e, product)}
                                 >
                                 </span>
                             </button>
@@ -81,7 +88,8 @@ const mapStateToProps = state => ({
 });
 
 FeaturedProducts.propTypes = {
+    addToCart: PropTypes.func.isRequired,
     getHomepageProducts: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps, { getHomepageProducts })(FeaturedProducts);
+export default connect(mapStateToProps, { addToCart, getHomepageProducts })(FeaturedProducts);
