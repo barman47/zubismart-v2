@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import Skeleton from 'react-loading-skeleton';
 import numeral from 'numeral';
 
-import { getHomepageProducts } from '../actions/productsActions';
+import { getHomepageProducts, getProduct } from '../actions/productsActions';
 import { addToCart } from '../actions/cartActions';
 
 const FeaturedProducts = (props) => {
@@ -42,7 +42,7 @@ const FeaturedProducts = (props) => {
     } else if (loading === false && products.length > 0) {
         productsToDisplay = products.map((product) => (
             <div key={product._id} className="col s12 m6 l3 product">
-                <Link to={`/products/${product._id}`}>
+                <Link to={`/products/${product.category}/${product._id}`}>
                     <div className="card">
                         <div className="card-image">
                             <img src={`/uploads/${product.image}`}  alt={product.name} />  

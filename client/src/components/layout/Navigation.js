@@ -55,7 +55,6 @@ class Navigation extends Component {
         }
 
         if (cart.length !== this.state.cart.length) {
-            console.log('cart updated');
             this.setState({ cart });
         }
     }
@@ -166,7 +165,7 @@ class Navigation extends Component {
                     <nav>
                         <div className="nav-wrapper">
                             <ul className="hide-on-med-and-down">
-                                <li><Link to="">Services</Link></li>
+                                {/* <li><Link to="">Services</Link></li> */}
                                 <li><Link to="">Fashion</Link></li>
                                 <li><Link to="">Gadgets</Link></li>
                                 <li><Link to="">Cosmetics</Link></li>
@@ -183,7 +182,7 @@ class Navigation extends Component {
                 <ul id="mobile-menu" className="sidenav">
                     <li><Link to="/">Home</Link></li>
                     <li className="divider"></li>
-                    <li><Link to="">Services</Link></li>
+                    {/* <li><Link to="">Services</Link></li> */}
                     <li><Link to="">Fashion</Link></li>
                     <li><Link to="">Gadgets</Link></li>
                     <li><Link to="">Cosmetics</Link></li>

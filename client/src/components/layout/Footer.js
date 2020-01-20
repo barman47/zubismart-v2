@@ -38,7 +38,7 @@ const Footer = () => (
         </div>
         <div className="footer-copyright">
             <div id="left">
-                <p style={{ color: '#a2a2a2' }}>&copy; {new Date().getFullYear()} Copyright Zubis Mart - Developed by <span className="myLink"><a href="https://www.domstech.com" rel="noopener noreferrer" target="_blank">Barman</a></span></p>
+                <p style={{ color: '#a2a2a2' }}>Copyright &copy; {new Date().getFullYear()} Zubis Mart - Developed by <span className="myLink"><a href="https://www.domstech.com" rel="noopener noreferrer" target="_blank">Barman</a></span></p>
             </div>
             <div id="right">
                 <h5>Connect</h5>
@@ -49,7 +49,7 @@ const Footer = () => (
                 </ul>
             </div>
         </div>
-        </footer>
+    </footer>
 );
 
 export default Footer;

@@ -44,6 +44,24 @@ router.get('/home', (req, res) => {
         });
 });
 
+// Find product by ID
+// @route GET /api/products/id
+// @desc Get product by ID
+// @access Private
+router.get('/:id', (req, res) => {
+    Product.findById(req.params.id)
+        .then(product => {
+            if (product) {
+                return res.json(product);
+            }
+            res.status().json({ msg: 'Product not found' });
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(404).json({ msg: 'Product not found' });
+        });
+});
+
 // Find products
 // @route GET /api/products/:category
 // @desc Find Product by Category
@@ -100,10 +118,17 @@ router.post('/add', passport.authenticate('jwt-admin', { session: false }), (req
             return res.statsu(400).json(errors)
         }
 
-
         if (process.env.NODE_ENV !== 'production') {
             uploadPath = `${__dirname}../../../client/public/uploads`;
         }
+
+        let productCode = [];
+        for (var i = 1; i <=10; i++) {
+            productCode.push(Math.floor(Math.random() * 10));
+        }
+        productCode.unshift('ZM');
+        productCode.toString();
+        productCode = productCode.join('');
 
         Product.findOne({ image: image.name })
             .then(product => {
@@ -120,9 +145,11 @@ router.post('/add', passport.authenticate('jwt-admin', { session: false }), (req
                     const product = new Product({
                         category: req.body.category,
                         description: req.body.description,
+                        brand: req.body.brand ? req.body.brand : 'Others',
                         price: req.body.price,
                         shippingPrice: req.body.shippingPrice,
                         name: req.body.name,
+                        productCode,
                         image: image.name
                     });
                     product.save()

@@ -1,6 +1,5 @@
-import {  GET_ERRORS, PRODUCT_ADDED, PRODUCT_UPDATED, PRODUCT_DELETED, SET_PRODUCTS } from '../actions/types';
+import {  GET_ERRORS, PRODUCT_UPDATED, PRODUCT_DELETED, SET_PRODUCTS } from '../actions/types';
 import M from 'materialize-css';
-
 import axios from 'axios';
 
 export const clearErrors = () => dispatch => {
@@ -9,6 +8,33 @@ export const clearErrors = () => dispatch => {
         payload: {}
     });
         
+};
+
+export const getProduct = (id) => dispatch => {
+    axios.get(`/api/products/${id}`)
+        .then(res => {
+            dispatch({
+                type: PRODUCT_UPDATED,
+                payload: res.data
+            });
+        })
+        .catch(err => {
+            M.toast({
+                html: err.response.data,
+                classes: 'toast-invalid'
+            });
+            if (err.response.status === 404) {
+                dispatch({
+                    type: PRODUCT_UPDATED,
+                    payload: {}
+                });
+            } else {
+                dispatch({
+                    type: PRODUCT_UPDATED,
+                    payload: []
+                });
+            }
+        });
 };
 
 export const getProducts = () => dispatch => {

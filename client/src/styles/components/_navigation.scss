@@ -216,6 +216,10 @@ header {
 }
 
 @media (max-width: $md-breakpoint) {
+    div.navbar-fixed {
+        display: none;
+    }
+    
     .brand-logo {
         float: right;
         margin: 0 auto;

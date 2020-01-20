@@ -31,6 +31,11 @@ const ProductSchema = new Schema({
         type: String
     },
 
+    productCode: {
+        type: String,
+        required: true
+    },
+
     image: {
         type: String
     },

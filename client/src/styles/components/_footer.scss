@@ -1,5 +1,9 @@
 .page-footer {
     background-color: $off-black !important;
+    width: 100vw;
+    position: relative;
+    bottom: 0;
+    // z-index: -2 !important;
 }
 
 .page-footer .col h5 {

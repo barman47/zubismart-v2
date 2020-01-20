@@ -17,7 +17,7 @@ const AddService = (props) => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [category, setCategory] = useState('');
-    const [brand, setBrand] = useState('');
+    // const [brand, setBrand] = useState('');
     const [brands, setBrands] = useState([]);
     const [price, setPrice] = useState('');
     const [shippingPrice, setShippingPrice] = useState('');

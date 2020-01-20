@@ -16,6 +16,7 @@ import Profile from './components/user/Profile';
 import Address from './components/user/Address';
 
 import AddProduct from './components/products/AddProduct';
+import ViewProduct from './components/products/ViewProduct';
 
 import AddService from './components/services/AddService';
 
@@ -71,6 +72,7 @@ class App extends Component {
 							<Route exact path="/users/login" component={Login} />
 							<Route exact path="/users/register" component={Register} />
 							<Route exact path="/admin/login" component={LoginAdmin} />
+							<Route exact path="/products/:category/:id" component={ViewProduct} />
 							<Switch>
 								<AdminRoute path="/admin/products" exact component={AdminDashboard} />
 							</Switch>
