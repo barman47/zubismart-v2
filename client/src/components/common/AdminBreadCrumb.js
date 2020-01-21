@@ -10,7 +10,7 @@ const AdminBreadCrumb = ({ title, link, linkText }) => {
                 <li><Link to={link}>Admin</Link><span className="mdi mdi-chevron-right chevron-icon breadcrumb-icon"></span></li>
                 <li><Link className="active" to={link}>{linkText}</Link><span className="mdi mdi-chevron-right chevron-icon breadcrumb-icon"></span></li>
             </ul>
-            <h2>{title}</h2>
+            <h3>{title}</h3>
         </div>
     );
 }

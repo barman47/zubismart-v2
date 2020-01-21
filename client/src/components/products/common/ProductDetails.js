@@ -6,22 +6,25 @@ import numeral from 'numeral';
 import Skeleton from 'react-loading-skeleton';
 import M from 'materialize-css';
 
-import { getProduct } from '../../../actions/productsActions';
+import { buyNow, getProduct } from '../../../actions/productsActions';
 
-class ProductDeatils extends Component {
+class ProductDetails extends Component {
     constructor (props) {
         super(props);
         this.state = {
             hideNumber: true,
             product: {},
+            user: {},
             quantity: 1
         };
     }
 
     componentDidMount() {
+        this.setState({ user: this.props.user });
         this.props.getProduct(this.props.match.params.id);
+        
         const elems = document.querySelectorAll('.tooltipped');
-        // esline-disable-next-line
+        // eslint-disable-next-line
         const instances = M.Tooltip.init(elems, {});
     }
 
@@ -60,6 +63,11 @@ class ProductDeatils extends Component {
         }));
     }
 
+    buyNow = () => {
+        this.props.buyNow(this.state.product);
+        this.props.history.push('/cart/overview', { quantity: this.state.quantity });
+    }
+
     share = () => {
         if (Navigator.share) {
             const { product } = this.state;
@@ -72,7 +80,10 @@ class ProductDeatils extends Component {
                 html: 'Sharing Successful',
                 classes: 'toast-valid'
             }))
-            .catch(err => console.error(err));   
+            .catch(err => M.toast({
+                html: 'Sharing Failed',
+                classes: 'toast-invalid'
+            }));   
         }
     }
 
@@ -81,7 +92,7 @@ class ProductDeatils extends Component {
         const { setHideNumber } = this;
         return (
             <div className="product-details">
-                <div>
+                <div className="image-container">
                     <img className="product-image" src={`/uploads/${product.image}`}  alt={product.name} />  
                 </div>
                 <div>
@@ -117,7 +128,7 @@ class ProductDeatils extends Component {
                         </div>
                     </section>
                     <div className="buy-now info">
-                        <button>Buy Now</button>
+                        <button onClick={this.buyNow}>Buy Now</button>
                         <span className="mdi mdi-cards-heart mdi-24px favourite" style={{ marginLeft: '5px' }}>
                         </span>
                         <span className="save">&nbsp;&nbsp;Save for Later</span>
@@ -125,7 +136,7 @@ class ProductDeatils extends Component {
                     <div className="share">
                         <p>Share with Friends</p>
                         
-                        <span title="Share Product with friends" className="mdi mdi-share-variant mdi-24px share-icon facebook"></span>
+                        <span onClick={this.share} title="Share Product with friends" className="mdi mdi-share-variant mdi-24px share-icon facebook"></span>
                         {/* <span className="mdi mdi-facebook mdi-24px share-icon facebook"></span>
                         <span className="mdi mdi-twitter mdi-24px share-icon twitter"></span>
                         <span className="mdi mdi-whatsapp mdi-24px share-icon whatsapp"></span> */}
@@ -136,12 +147,14 @@ class ProductDeatils extends Component {
     }
 }
 
-ProductDeatils.prodTypes = {
+ProductDetails.prodTypes = {
+    buyNow: PropTypes.func.isRequired,
     getProduct: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-    products: state.products
+    products: state.products,
+    user: state.user
 });
 
-export default connect(mapStateToProps, { getProduct })(withRouter(ProductDeatils));
+export default connect(mapStateToProps, { buyNow, getProduct })(withRouter(ProductDetails));

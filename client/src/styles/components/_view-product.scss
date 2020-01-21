@@ -21,9 +21,14 @@
         // width: 90%;
     }
 
+    .product-details .image-container {
+        display: flex;
+        align-items: center;
+    }
+
     .product-details div:first-child img {
-        margin: 0 auto;
-        width: 80%;
+        margin: $sm auto;
+        max-width: 50%;
     }
 
     div:last-child .product-code, div:last-child .brand {
@@ -61,6 +66,7 @@
     .quantity div:nth-child(2) {
         border: 1px solid darken($off-white, 10%);
         border-radius: 3px;
+        box-shadow: $shadow;
     }
 
     .quantity div:nth-child(2) button {

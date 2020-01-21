@@ -6,6 +6,7 @@ export default (state = initalState, action) => {
     switch (action.type) {
         case ADD_TO_CART:
             let itemToReturn = null;
+            // eslint-disable-next-line
             state.find(item => {
                 if (item._id === action.payload._id) {
                     itemToReturn = item;

@@ -89,6 +89,7 @@ const AddService = (props) => {
             });
     };
 
+    // eslint-disable-next-line
     let brandsToDisplay;
 
     if (brands.length > 0) {

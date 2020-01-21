@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import Skeleton from 'react-loading-skeleton';
 import numeral from 'numeral';
 
-import { getHomepageProducts, getProduct } from '../actions/productsActions';
+import { getHomepageProducts } from '../actions/productsActions';
 import { addToCart } from '../actions/cartActions';
 
 const FeaturedProducts = (props) => {

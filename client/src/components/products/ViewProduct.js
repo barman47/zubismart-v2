@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import { Helmet } from 'react-helmet';
 
-import ProductDetails from './common/ProductDeatils';
+import ProductDetails from './common/ProductDetails';
 import SoldBy from './common/SoldBy';
 import ProductInfo from './common/ProductInfo';
 
@@ -10,17 +11,22 @@ const ViewProduct = (props) => {
 
     useEffect(() => {
         setProduct(props.products.product);
-    });
+    }, [props.products]);
 
     return (
-        <section className="view-product">
-            <ProductDetails />
-            <SoldBy />
-            <ProductInfo description={product.description}/>
-            <div className="similar-products">
+        <>
+            <>
+                <Helmet><title>{`${product.name || ''} | zubismart.com`}</title></Helmet>
+            </>
+            <section className="view-product">
+                <ProductDetails />
+                <SoldBy />
+                <ProductInfo description={product.description}/>
+                <div className="similar-products">
 
-            </div>
-        </section>
+                </div>
+            </section>
+        </>
     )
 };
 

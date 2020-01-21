@@ -121,8 +121,9 @@ div.breadcrumb::before {
     margin-top: 9.2rem;
     padding: $sm;
 
-    h2 {
-        color: $off-black;
+    h3 {
+        color: $primary-color;
+        font-weight: 600;
         margin: 0;
     }
 

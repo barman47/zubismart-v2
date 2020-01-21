@@ -1,13 +1,15 @@
 const express = require('express');
 const passport = require('passport');
 const fs = require('fs');
+const path = require('path');
 const router = express.Router();
 
 const Product = require('../../models/Product');
 
 const validateAddProduct = require('../../utils/validation/addProduct');
 
-let uploadPath = `${__dirname}../../../client/build/uploads`;
+let uploadPath = path.resolve(__dirname, '../../', 'client', 'build', 'uploads');
+// let uploadPath = `${__dirname}../../../client/build/uploads`;
 
 // Find products
 // @route GET /api/products/all
@@ -119,7 +121,7 @@ router.post('/add', passport.authenticate('jwt-admin', { session: false }), (req
         }
 
         if (process.env.NODE_ENV !== 'production') {
-            uploadPath = `${__dirname}../../../client/public/uploads`;
+            uploadPath = path.resolve(__dirname, '../../', 'client', 'public', 'uploads');
         }
 
         let productCode = [];

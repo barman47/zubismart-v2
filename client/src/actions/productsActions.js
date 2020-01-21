@@ -1,4 +1,4 @@
-import {  GET_ERRORS, PRODUCT_UPDATED, PRODUCT_DELETED, SET_PRODUCTS } from '../actions/types';
+import {  GET_ERRORS, PRODUCT_UPDATED, PRODUCT_DELETED, SET_PRODUCTS, ADD_TO_CART } from '../actions/types';
 import M from 'materialize-css';
 import axios from 'axios';
 
@@ -116,4 +116,11 @@ export const toggleProduct = (id) => dispatch => {
             html: 'Something went wrong',
             classes: 'toast-invalid'
         }));
+};
+
+export const buyNow = (product) => (dispatch) => {
+    dispatch({
+        type: ADD_TO_CART,
+        payload: product
+    });
 };

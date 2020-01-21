@@ -17,6 +17,7 @@ import Address from './components/user/Address';
 
 import AddProduct from './components/products/AddProduct';
 import ViewProduct from './components/products/ViewProduct';
+import Overview from './components/products/Overview';
 
 import AddService from './components/services/AddService';
 
@@ -73,6 +74,7 @@ class App extends Component {
 							<Route exact path="/users/register" component={Register} />
 							<Route exact path="/admin/login" component={LoginAdmin} />
 							<Route exact path="/products/:category/:id" component={ViewProduct} />
+							<Route exact path="/cart/overview/" component={Overview} />
 							<Switch>
 								<AdminRoute path="/admin/products" exact component={AdminDashboard} />
 							</Switch>
