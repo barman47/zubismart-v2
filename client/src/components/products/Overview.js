@@ -7,6 +7,7 @@ import numeral from 'numeral';
 import { GeneralBreadCrumb } from '../common/breadcrumb';
 
 import img from '../../assets/img/slide4.jpg';
+import Skeleton from 'react-loading-skeleton';
 
 class Overview extends Component {
     constructor (props) {
@@ -21,14 +22,14 @@ class Overview extends Component {
     }
 
     componentDidMount () {
-        const { quantity, product } = this.props.location.state;
+        const { quantity } = this.props.location.state;
         const { cart, products } = this.props;
 
         if (this.props.location.state) {
             this.setState({
                 cart,
                 items: cart.length,
-                product,
+                product: products.product,
                 products: products.products,
                 quantity: quantity
             });
@@ -57,33 +58,35 @@ class Overview extends Component {
     }
     
     render () {
-        const { products } = this.state;
+        const { cart } = this.state;
         
-        // let cartItems;
-        // if (products)
-        // cartItems = products.map(product => (
-        //     <tr key={product._id}>
-        //         <td className="product-image">
-        //             <img src={product.image} alt={product.name} />
-        //             <p>{product.name}</p>
-        //         </td>
-        //         <td className="table-info">
-        //             <div className="quantity">
-        //                 <button onClick={() => this.setProductQuantity('minus')}>-</button>
-        //                 <span>1</span>
-        //                 <button onClick={() => this.setProductQuantity('plus')}>+</button>
-        //             </div>
-        //         </td>
-        //         <td className="table-info price">
-        //             <h6>{numeral(product.price).format('0,0')}</h6>
-        //             <small>{numeral(product.price).format('0,0')} X 3 items</small>
-        //         </td>
-        //         <td className="action-column action">
-        //             <button>Remove Item</button><br />
-        //             <button>Save for Later</button>
-        //         </td>
-        //     </tr>
-        // ));
+        let cartItems;
+        if (cart.length > 0) {
+            cartItems = cart.map(product => (
+                <tr key={product._id}>
+                    <td className="product-image">
+                        <img src={`/uploads/${product.image}`} alt={product.name} />
+                        <p>{product.name}</p>
+                    </td>
+                    <td className="table-info">
+                        <div className="quantity">
+                            <button onClick={() => this.setProductQuantity('minus')}>-</button>
+                            <span>1</span>
+                            <button onClick={() => this.setProductQuantity('plus')}>+</button>
+                        </div>
+                    </td>
+                    <td className="table-info price">
+                        <h6>{numeral(product.price).format('0,0')}</h6>
+                        <small>{numeral(product.price).format('0,0')} X 3 items</small>
+                    </td>
+                    <td className="action-column action">
+                        <button>Remove Item</button><br />
+                        <button>Save for Later</button>
+                    </td>
+                </tr>
+            ));
+        }
+        
         return (
             <>
                 <>
@@ -97,39 +100,23 @@ class Overview extends Component {
                     </button>
                     <div className="content">
                         <div className="cart-details">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th className="table-info">Item Information</th>
-                                        <th className="table-info">Quantity</th>
-                                        <th className="table-info">Item Price</th>
-                                        <th className="action-column">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td className="product-image">
-                                            <img src={img} alt="" />
-                                            <p>Laptop NameLaptop NameLaptop NameLaptop NameLaptop NameLaptop Name</p>
-                                        </td>
-                                        <td className="table-info">
-                                            <div className="quantity">
-                                                <button onClick={() => this.setProductQuantity('minus')}>-</button>
-                                                <span>1</span>
-                                                <button onClick={() => this.setProductQuantity('plus')}>+</button>
-                                            </div>
-                                        </td>
-                                        <td className="table-info price">
-                                            <h6>N205, 000</h6>
-                                            <small>N320,000 X 3 items</small>
-                                        </td>
-                                        <td className="action-column action">
-                                            <button>Remove Item</button><br />
-                                            <button>Save for Later</button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            {
+                                cart.length > 0 ? (
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th className="table-info">Item Information</th>
+                                                <th className="table-info">Quantity</th>
+                                                <th className="table-info">Item Price</th>
+                                                <th className="action-column">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {cartItems}
+                                        </tbody>
+                                    </table>
+                                ): <h3>No Items in cart</h3>
+                            }
                         </div>
                         <div className="order-summary">
                             <div className="flex-container">

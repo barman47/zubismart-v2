@@ -1,4 +1,6 @@
-import {  GET_ERRORS, PRODUCT_UPDATED, PRODUCT_DELETED, SET_PRODUCTS, ADD_TO_CART } from '../actions/types';
+import {  GET_ERRORS, PRODUCT_UPDATED, PRODUCT_DELETED, SET_PRODUCTS, ADD_TO_CART, SET_CART_ITEMS } from '../actions/types';
+import isEmpty from '../validation/is-empty';
+
 import M from 'materialize-css';
 import axios from 'axios';
 
@@ -118,9 +120,21 @@ export const toggleProduct = (id) => dispatch => {
         }));
 };
 
-export const buyNow = (product) => (dispatch) => {
-    dispatch({
-        type: ADD_TO_CART,
-        payload: product
-    });
+export const buyNow = (item, user) => (dispatch) => {
+    if (isEmpty(user)) {
+        dispatch({
+            type: ADD_TO_CART,
+            payload: [item]
+        });
+    } else {
+        const data = { itemID: item.product._id, userID: user.id }
+        axios.post('/api/cart/add', data)
+            .then(res => {
+                dispatch({
+                    type: SET_CART_ITEMS,
+                    payload: res.data
+                });
+            })
+            .catch(err => console.error(err));
+    }
 };

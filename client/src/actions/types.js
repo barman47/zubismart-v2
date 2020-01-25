@@ -11,3 +11,6 @@ export const SET_BRANDS = 'SET_BRANDS';
 export const REQUEST_SUCCESS = 'REQUEST_SUCCESS';
 export const ADDRESS_UPDATED = 'ADDRESS_UPDATED';
 export const ADD_TO_CART = 'ADD_TO_CART';
+export const ADD_ITEMS_TO_CART = 'ADD_ITEMS_TO_CART';
+export const SET_CART_ITEMS = 'SET_CART_ITEMS';
+export const CLEAR_CART = 'CLEAR_CART';

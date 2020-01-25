@@ -9,6 +9,7 @@ const admin = require('./routes/api/admin');
 const products = require('./routes/api/products');
 const services = require('./routes/api/services');
 const brands = require('./routes/api/brands');
+const cart = require('./routes/api/cart');
 const users = require('./routes/api/users');
 
 const app = express();
@@ -37,6 +38,7 @@ app.use('/api/admin', admin);
 app.use('/api/products', products);
 app.use('/api/services', services);
 app.use('/api/brands', brands);
+app.use('/api/cart', cart);
 app.use('/api/users', users);
 
 app.get('*', (req, res) => {

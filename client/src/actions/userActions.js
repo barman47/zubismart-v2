@@ -1,10 +1,12 @@
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
-import { GET_ERRORS, SET_CURRENT_USER } from './types';
+import { ADD_TO_CART, ADD_ITEMS_TO_CART, CLEAR_CART, GET_ERRORS, SET_CURRENT_USER } from './types';
 import M from 'materialize-css';
 import setAuthToken from '../utils/setAuthToken';
 
-export const loginUser = (user) => (dispatch) => {
+import { addItemsToCart } from './cartActions';
+
+export const loginUser = (user, cart) => (dispatch) => {
     dispatch({
         type: GET_ERRORS,
         payload: {}
@@ -15,7 +17,6 @@ export const loginUser = (user) => (dispatch) => {
                 html: 'Logged in successfuly',
                 classes: 'toast-valid'
             });
-
             if (localStorage.jwtAdminToken) {
                 localStorage.removeItem('jwtAdminToken');
             }
@@ -34,6 +35,29 @@ export const loginUser = (user) => (dispatch) => {
 
             // Set current user
             dispatch(setCurrentUser(decoded));
+
+            // addItemsToCart(cart.products, user);
+            const products = cart.products.map(product => {
+                return { product: product._id };
+            });
+            const data = {
+                userID: decoded.id,
+                products
+            };
+
+            console.log(data.products);
+            if (data.products.length > 0) {
+                axios.post('/api/cart/addItems', data)
+                .then(res => {
+                    console.log(res.data);
+                    // dispatch({
+                    //     type: ADD_ITEMS_TO_CART,
+                    //     payload: [res.data]
+                    // });
+                    console.log(res.data);
+                })
+                .catch(err => console.error(err));
+            }
         })
         .catch(err => {
             try {
@@ -233,6 +257,9 @@ export const logoutUser = () => (dispatch) => {
     localStorage.removeItem('jwtToken');
     setAuthToken(false);
     dispatch(setCurrentUser(null));
+    dispatch({
+        type: CLEAR_CART
+    });
     M.toast({
         html: 'User logged out Successfully',
         classes: 'toast-valid'

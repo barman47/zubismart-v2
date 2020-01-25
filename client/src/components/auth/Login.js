@@ -43,7 +43,7 @@ const Login = (props) => {
             password
         };
 
-        props.loginUser(user, props.history);
+        props.loginUser(user, props.cart);
     };
 
     return (
@@ -54,6 +54,7 @@ const Login = (props) => {
                     <h3>User Login</h3>
                     <TextInput
                         type="email"
+                        id="email"
                         label="Enter Email Address"
                         icon="mdi mdi-email-outline"
                         name="email"
@@ -63,6 +64,7 @@ const Login = (props) => {
                     />
                     <TextInput
                         type="password"
+                        id="password"
                         label="Enter Password"
                         icon="mdi mdi-lock-outline"
                         name="password"
@@ -88,8 +90,9 @@ Login.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    errors: state.errors,
     admin: state.admin,
+    cart: state.cart,
+    errors: state.errors,
     user: state.user
 });
 

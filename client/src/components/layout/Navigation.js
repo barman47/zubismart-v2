@@ -18,8 +18,10 @@ class Navigation extends Component {
         super(props);
         this.state = {
             admin: null,
-            user: null,
-            cart: [],
+            user: {},
+            cart: {
+                products: []
+            },
             showDropdown: false
         };
     }
@@ -27,7 +29,7 @@ class Navigation extends Component {
     componentDidMount () {
         this.setState({ 
             admin: this.props.admin,
-            user: this.props.user.user,
+            // user: this.props.user.user,
             showDropdown: false
         });
         const elems = document.querySelectorAll('.sidenav');
@@ -42,8 +44,8 @@ class Navigation extends Component {
     UNSAFE_componentWillReceiveProps (nextProps) {
         const { admin, user, cart } = nextProps;
         
-        if(isEmpty(user.user)) {
-            this.setState({ user: null });
+        if(user.authenticated === false) {
+            this.setState({ user: {} });
         } else {
             this.setState({ user: user.user });
         }
@@ -53,9 +55,21 @@ class Navigation extends Component {
         } else {
             this.setState({ admin });
         }
+        
+        try {
+            if (cart.products.length !== this.state.cart.products.length) {
+                this.setState({ cart });
+            }
+        } catch (err) {
 
-        if (cart.length !== this.state.cart.length) {
-            this.setState({ cart });
+        }
+
+        if (isEmpty(nextProps.cart)) {
+            this.setState({
+                cart: {
+                    products: []
+                }
+            });
         }
     }
 
@@ -155,9 +169,9 @@ class Navigation extends Component {
                     </div>
                     <div>
                         {header}
-                        <Link to="/cart" className="grid-item">
+                        <Link to="/cart/overview" className="grid-item">
                             <span style={{ marginRight: '5px' }} className="mdi mdi-cart-outline mdi-12px left"></span>My Cart 
-                            <span className="cart">{cart.length}</span>
+                            <span className="cart">{cart.products.length}</span>
                         </Link>
                     </div>
                 </section>
@@ -166,15 +180,14 @@ class Navigation extends Component {
                         <div className="nav-wrapper">
                             <ul className="hide-on-med-and-down">
                                 {/* <li><Link to="">Services</Link></li> */}
-                                <li><Link to="">Fashion</Link></li>
-                                <li><Link to="">Gadgets</Link></li>
-                                <li><Link to="">Cosmetics</Link></li>
-                                <li><Link to="">Home/Office</Link></li>
-                                <li><Link to="">Groceries</Link></li>
-                                <li><Link to="">Babies</Link></li>
-                                <li><Link to="">Books</Link></li>
-                                <li><Link to="">Events</Link></li>
-                                <li><Link to="">Others</Link></li>
+                                <li><Link to="/fashion">Fashion</Link></li>
+                                <li><Link to="/gadgets">Gadgets</Link></li>
+                                <li><Link to="/cosmetics">Cosmetics</Link></li>
+                                <li><Link to="/home-and-office">Home &amp; Office</Link></li>
+                                <li><Link to="/groceries">Groceries</Link></li>
+                                <li><Link to="/babies">Babies</Link></li>
+                                <li><Link to="/books">Books</Link></li>
+                                <li><Link to="/others">Others</Link></li>
                             </ul>
                         </div>
                     </nav>
@@ -183,15 +196,14 @@ class Navigation extends Component {
                     <li><Link to="/">Home</Link></li>
                     <li className="divider"></li>
                     {/* <li><Link to="">Services</Link></li> */}
-                    <li><Link to="">Fashion</Link></li>
-                    <li><Link to="">Gadgets</Link></li>
-                    <li><Link to="">Cosmetics</Link></li>
-                    <li><Link to="">Home/Office</Link></li>
-                    <li><Link to="">Groceries</Link></li>
-                    <li><Link to="">Babies</Link></li>
-                    <li><Link to="">Books</Link></li>
-                    <li><Link to="">Events</Link></li>
-                    <li><Link to="">Others</Link></li>
+                    <li><Link to="/fashion">Fashion</Link></li>
+                    <li><Link to="/gadgets">Gadgets</Link></li>
+                    <li><Link to="/cosmetics">Cosmetics</Link></li>
+                    <li><Link to="/home-and-office">Home &amp; Office</Link></li>
+                    <li><Link to="/groceries">Groceries</Link></li>
+                    <li><Link to="/babies">Babies</Link></li>
+                    <li><Link to="/books">Books</Link></li>
+                    <li><Link to="/others">Others</Link></li>
                 </ul>
             </>
         );

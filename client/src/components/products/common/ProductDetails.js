@@ -7,6 +7,9 @@ import Skeleton from 'react-loading-skeleton';
 import M from 'materialize-css';
 
 import { buyNow, getProduct } from '../../../actions/productsActions';
+import { decreaseItemCount, increaseItemCount } from '../../../actions/cartActions';
+
+import isEmpty from '../../../validation/is-empty';
 
 class ProductDetails extends Component {
     constructor (props) {
@@ -33,6 +36,12 @@ class ProductDetails extends Component {
             this.setState({
                 product: nextProps.products.product
             });
+        }
+
+        if (nextProps.user) {
+            if (nextProps.user.authenticated === false) {
+                this.setState({ user: {} });
+            }
         }
     }
 
@@ -64,8 +73,48 @@ class ProductDetails extends Component {
     }
 
     buyNow = () => {
-        this.props.buyNow(this.state.product);
+        const product = { quantity: this.state.quantity, product: this.state.product };
+        this.props.buyNow(product, this.state.user.user);
         this.props.history.push('/cart/overview', { quantity: this.state.quantity });
+    }
+
+    // Work on increasing cart items and fix upload folder
+    setProductQuantity = (mode, product) => {
+        if (isEmpty(this.state.user)) {
+            switch (mode) {
+                case 'plus':
+                    console.log('increase item');
+                    this.setState(prevState => ({
+                        quantity: prevState.quantity + 1
+                    }));
+                    break;
+    
+                case 'minus':
+                    console.log('decrease item');
+                    if (this.state.quantity !== 1) {
+                        this.setState(prevState => ({
+                            quantity: prevState.quantity - 1
+                        }));
+                    }
+                    break;
+    
+                default:
+                    break;
+            }
+        } else {
+            switch (mode) {
+                case 'plus':
+                    this.props.increaseItemCount(product, this.state.user.user);
+                    break;
+    
+                case 'minus':
+                    this.props.decreaseItemCount(product, this.state.user.user);
+                    break;
+    
+                default:
+                    break;
+            }
+        }
     }
 
     share = () => {
@@ -116,9 +165,9 @@ class ProductDetails extends Component {
                     <section className="info quantity">
                         <p>Quantity:</p>
                         <div>
-                            <button onClick={() => this.setProductQuantity('minus')}>-</button>
+                            <button onClick={() => this.setProductQuantity('minus', product)}>-</button>
                             <span>{quantity}</span>
-                            <button onClick={() => this.setProductQuantity('plus')}>+</button>
+                            <button onClick={() => this.setProductQuantity('plus', product)}>+</button>
                         </div>
                         <div>
                             <p>Call us for bulk purchases</p>
@@ -149,7 +198,9 @@ class ProductDetails extends Component {
 
 ProductDetails.prodTypes = {
     buyNow: PropTypes.func.isRequired,
-    getProduct: PropTypes.func.isRequired
+    getProduct: PropTypes.func.isRequired,
+    decreaseItemCount: PropTypes.func.isRequired,
+    increaseItemCount: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -157,4 +208,4 @@ const mapStateToProps = state => ({
     user: state.user
 });
 
-export default connect(mapStateToProps, { buyNow, getProduct })(withRouter(ProductDetails));
+export default connect(mapStateToProps, { buyNow, getProduct, decreaseItemCount, increaseItemCount })(withRouter(ProductDetails));

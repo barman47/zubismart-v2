@@ -157,14 +157,13 @@ const AddProduct = (props) => {
                                     onChange={(e) => setCategory(e.target.value)}
                                 >
                                     <option value="" defaultChecked disabled>Select Product Category</option>
-                                    <option value="Fashion">Fashion</option>
-                                    <option value="Gadgets">Gadgets</option>
-                                    <option value="Home/Office">Home/Office</option>
-                                    <option value="Groceries">Groceries</option>
-                                    <option value="Babies">Babies</option>
-                                    <option value="Books">Books</option>
-                                    <option value="Events">Events</option>
-                                    <option value="Others">Others</option>
+                                    <option value="fashion">Fashion</option>
+                                    <option value="gadgets">Gadgets</option>
+                                    <option value="home-and-office">Home &amp; Office</option>
+                                    <option value="groceries">Groceries</option>
+                                    <option value="babies">Babies</option>
+                                    <option value="books">Books</option>
+                                    <option value="others">Others</option>
                                 </select>
                                 <label htmlFor="category">Product Category</label>
                                 {errors.category ? (<span className="helper-text invalid-text">{errors.category}</span>) : null}
@@ -262,7 +261,7 @@ const AddProduct = (props) => {
                             <div className="upload-progress" style={{ width: `${Math.round(uploadProgress, 2)}%` }}>
                                 {
                                     Math.round(uploadProgress, 2) ?
-                                    Math.round(uploadProgress, 2)
+                                    `${Math.round(uploadProgress, 2)}%`
                                     :
                                     null   
                                 }
