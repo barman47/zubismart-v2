@@ -142,7 +142,7 @@ class ProductDetails extends Component {
         return (
             <div className="product-details">
                 <div className="image-container">
-                    <img className="product-image" src={`/uploads/${product.image}`}  alt={product.name} />  
+                    <img className="product-image" src={`/static/uploads/${product.image}`}  alt={product.name} />  
                 </div>
                 <div>
                     <div className="details-info">

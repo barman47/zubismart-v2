@@ -83,7 +83,7 @@ class Overview extends Component {
                 cartItems = cart.products.map((product, index) => (
                     <tr key={index}>
                         <td className="product-image">
-                            <img src={`/uploads/${product.product.image}`} alt={product.product.name} />
+                            <img src={`/static/uploads/${product.product.image}`} alt={product.product.name} />
                             <p>{product.product.name}</p>
                         </td>
                         <td className="table-info">
