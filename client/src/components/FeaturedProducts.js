@@ -50,7 +50,8 @@ class FeaturedProducts extends Component {
 
     addToCart = (e, item, user) => {
         e.preventDefault();
-        this.props.addToCart(item, user);
+        const product = { quantity: 1, product: item };
+        this.props.addToCart(product, user);
     };
 
     render () {

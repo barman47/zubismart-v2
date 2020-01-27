@@ -74,11 +74,11 @@ router.post('/addItems', passport.authenticate('jwt-user', { session: false }), 
                         itemExists = true;
                     }
                 }
-                    cart.save()
-                        .then((cart) => {
-                            res.json(cart);
-                        })
-                        .catch(err => console.error(err));
+                cart.save()
+                    .then((cart) => {
+                        res.json(cart);
+                    })
+                    .catch(err => console.error(err));
             } else {
                 // create new cart and append cart items    
                 const cartProducts = products.map(cartItem => ({ product: cartItem.product, quantity: 1 }));
@@ -105,18 +105,39 @@ router.post('/addItems', passport.authenticate('jwt-user', { session: false }), 
 // @access Protected
 router.post('/increment', passport.authenticate('jwt-user', { session: false }), (req, res) => {
     const { itemID, userID } = req.body;
+    console.log(req.body);
     Cart.findOne({ user: userID })
+        .populate({
+            path: 'products.product'
+        }) 
         .then(cart => {
-            let updatedProduct = {};
-            cart.products.forEach(product => {
-                if (product.id === itemID) {
-                    product.quantity = product.quantity + 1;
-                    updatedProduct = product;
-                }
-            });
-            cart.save()
-                .then(res.json(updatedProduct))
-                .catch(err => console.error(err));
+            if (cart) {
+                let updatedProduct = {};
+                cart.products.forEach(product => {
+                    if (product.id === itemID) {
+                        product.quantity = product.quantity + 1;
+                        updatedProduct = product;
+                    } else {
+                        cart.products.push({
+                            quantity: 2,
+                            product: itemID
+                        });
+                    }
+                });
+                cart.save()
+                    .then(res.json(updatedProduct))
+                    .catch(err => console.error(err));
+            } else {
+                cart = new Cart({
+                    user: userID,
+                    products: [{ product: itemID, quantity: 2 }]
+                });
+                cart.save()
+                    .then((item) => {
+                        res.json(item)
+                    })
+                    .catch(err => console.error(err));
+            }
         })
         .catch(err => console.error(err));
 });
@@ -128,11 +149,16 @@ router.post('/increment', passport.authenticate('jwt-user', { session: false }),
 router.post('/decrement', passport.authenticate('jwt-user', { session: false }), (req, res) => {
     const { itemID, userID } = req.body;
     Cart.findOne({ user: userID })
+        .populate({
+            path: 'products.product'
+        }) 
         .then(cart => {
             let updatedProduct = {};
-            cart.products.forEach(product => {
-                if (product.id === itemID && product.quantity >= 1) {
-                    product.quantity = product.quantity + 1;
+            let indexOfUpdated;
+            cart.products.forEach((product, index) => {
+                if (product.id === itemID && product.quantity !== 1) {
+                    product.quantity = product.quantity - 1;
+                    indexOfUpdated = index;
                     updatedProduct = product;
                 }
             });
@@ -157,4 +183,29 @@ router.get('/:userId', passport.authenticate('jwt-user', { session: false }), (r
         })
         .catch(err => console.error(err));
 });
+
+// PUT Update Cart
+// @route GET /api/cart/remove/"cartId/:productId"
+// @desc remove cart item by cartId and productId
+// @access Protected
+router.put('/remove/:cartId/:productId', passport.authenticate('jwt-user', { session: false }), (req, res) => {
+    const cartId = req.params.cartId;
+    const productId = req.params.productId;
+
+    Cart.findById(cartId)
+        .populate({
+            path: 'products.product'
+        })
+        .then(cart => {
+            if (cart) {
+                let remainingProducts = cart.products.filter(product => product.product._id != productId);
+                cart.products = remainingProducts;
+                cart.save()
+                    .then(updatedCart => res.json(updatedCart))
+                    .catch(err => console.error(err));
+            }
+        })
+        .catch(err => console.error(err));
+});
+
 module.exports = router;

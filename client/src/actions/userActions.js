@@ -253,13 +253,14 @@ export const setCurrentUser = (decoded) => {
     };
 }
 
-export const logoutUser = () => (dispatch) => {
+export const logoutUser = (history) => (dispatch) => {
     localStorage.removeItem('jwtToken');
     setAuthToken(false);
     dispatch(setCurrentUser(null));
     dispatch({
         type: CLEAR_CART
     });
+    history.push('/');
     M.toast({
         html: 'User logged out Successfully',
         classes: 'toast-valid'

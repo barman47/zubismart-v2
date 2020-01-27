@@ -6,10 +6,11 @@ const path = require('path');
 const { database_URI } = require('./config/keys');
 
 const admin = require('./routes/api/admin');
-const products = require('./routes/api/products');
-const services = require('./routes/api/services');
 const brands = require('./routes/api/brands');
 const cart = require('./routes/api/cart');
+const orders = require('./routes/api/orders');
+const products = require('./routes/api/products');
+const services = require('./routes/api/services');
 const users = require('./routes/api/users');
 
 const app = express();
@@ -35,10 +36,11 @@ app.use(fileUpload({ createParentPath: true, preserveExtension: true, safeFileNa
 app.use(express.static(publicPath));
 
 app.use('/api/admin', admin);
-app.use('/api/products', products);
-app.use('/api/services', services);
 app.use('/api/brands', brands);
 app.use('/api/cart', cart);
+app.use('/api/orders', orders);
+app.use('/api/products', products);
+app.use('/api/services', services);
 app.use('/api/users', users);
 
 app.get('*', (req, res) => {

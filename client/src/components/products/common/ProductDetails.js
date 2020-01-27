@@ -83,14 +83,12 @@ class ProductDetails extends Component {
         if (isEmpty(this.state.user)) {
             switch (mode) {
                 case 'plus':
-                    console.log('increase item');
                     this.setState(prevState => ({
                         quantity: prevState.quantity + 1
                     }));
                     break;
     
                 case 'minus':
-                    console.log('decrease item');
                     if (this.state.quantity !== 1) {
                         this.setState(prevState => ({
                             quantity: prevState.quantity - 1
@@ -104,11 +102,13 @@ class ProductDetails extends Component {
         } else {
             switch (mode) {
                 case 'plus':
-                    this.props.increaseItemCount(product, this.state.user.user);
+                    this.props.increaseItemCount(product, this.state.user);
                     break;
     
                 case 'minus':
-                    this.props.decreaseItemCount(product, this.state.user.user);
+                    if (this.state.quantity !== 1) {
+                        this.props.decreaseItemCount(product, this.state.user);
+                    }
                     break;
     
                 default:

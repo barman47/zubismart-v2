@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import M from 'materialize-css';
 import PropTypes from 'prop-types';
 
@@ -18,7 +18,7 @@ class Navigation extends Component {
         super(props);
         this.state = {
             admin: null,
-            user: {},
+            user: this.props.user.user,
             cart: {
                 products: []
             },
@@ -87,7 +87,7 @@ class Navigation extends Component {
                 break;
             
             case 'user':
-                this.props.logoutUser();
+                this.props.logoutUser(this.props.history);
                 this.setState({ showDropdown: false });
                 break;
 
@@ -221,4 +221,4 @@ const mapStateToProps = state => ({
     cart: state.cart
 });
 
-export default connect(mapStateToProps, { logoutAdmin, logoutUser })(Navigation);
+export default connect(mapStateToProps, { logoutAdmin, logoutUser })(withRouter(Navigation));
