@@ -66,7 +66,7 @@ class FeaturedProducts extends Component {
                     <Link to={`/products/${product.category}/${product._id}`}>
                         <div className="card">
                             <div className="card-image">
-                                <img src={`/uploads/${product.image}`}  alt={product.name} />  
+                                <img src={`/static/uploads/${product.image}`}  alt={product.name} />  
                                 <button 
                                     className="btn-floating halfway-fab tooltipped"
                                     data-tooltip="Add to Cart"

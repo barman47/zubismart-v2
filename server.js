@@ -34,6 +34,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(fileUpload({ createParentPath: true, preserveExtension: true, safeFileNames: true }));
 app.use(express.static(publicPath));
+app.use(express.static(path.resolve(__dirname, 'public')));
 
 app.use('/api/admin', admin);
 app.use('/api/brands', brands);

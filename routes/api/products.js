@@ -8,7 +8,7 @@ const Product = require('../../models/Product');
 
 const validateAddProduct = require('../../utils/validation/addProduct');
 
-let uploadPath = path.resolve(__dirname, '../../', 'client', 'build', 'uploads');
+let uploadPath = path.resolve(__dirname, '../../', 'client', 'build', 'static', 'uploads');
 // let uploadPath = `${__dirname}../../../client/build/uploads`;
 
 // Find products
@@ -121,7 +121,7 @@ router.post('/add', passport.authenticate('jwt-admin', { session: false }), (req
         }
 
         if (process.env.NODE_ENV !== 'production') {
-            uploadPath = path.resolve(__dirname, '../../', 'client', 'public', 'uploads');
+            uploadPath = path.resolve(__dirname, '../../', 'public', 'static', 'uploads');
         }
 
         let productCode = [];
