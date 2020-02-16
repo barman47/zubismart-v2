@@ -7,21 +7,15 @@ const initalState = {
 export default (state = initalState, action) => {
     switch (action.type) {
         case ADD_TO_CART:
-            try {
-                if (!state.products.includes(action.payload[0])) {
-                    return {
-                        ...state,
-                        products: state.products.concat(action.payload)
-                    };
-                } else {
-                    return state;
-                }
-            } catch (err) {
-
+            const productExists = state.products.some(product => product.product._id === action.payload[0].product._id);
+            if (!productExists) {
+                return {
+                    ...state,
+                    products: state.products.concat(action.payload)
+                };
             }
-            break;
 
-
+            return state;
         // case ADD_ITEMS_TO_CART:
         //     console.log(action.payload);
         //     break;

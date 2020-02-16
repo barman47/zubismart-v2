@@ -8,171 +8,171 @@
         margin-top: 0;
     }
 
-    .product-details {
-        background-color: $off-white;
-        display: grid;
-        grid-template-columns: 2fr 1fr;
-        margin-top: $lg;
-        // margin-left: auto;
-        // margin-right: auto;
-        padding-bottom: $lg;
-        padding-left: $lg;
-        padding-right: $lg;
-        // width: 90%;
-    }
+    // .product-details {
+    //     background-color: $off-white;
+    //     display: grid;
+    //     grid-template-columns: 2fr 1fr;
+    //     margin-top: $lg;
+    //     // margin-left: auto;
+    //     // margin-right: auto;
+    //     padding-bottom: $lg;
+    //     padding-left: $lg;
+    //     padding-right: $lg;
+    //     // width: 90%;
+    // }
 
-    .product-details .image-container {
-        display: flex;
-        align-items: center;
-    }
+    // .product-details .image-container {
+    //     display: flex;
+    //     align-items: center;
+    // }
 
-    .product-details div:first-child img {
-        margin: $sm auto;
-        max-width: 50%;
-    }
+    // .product-details div:first-child img {
+    //     margin: $sm auto;
+    //     max-width: 50%;
+    // }
 
-    div:last-child .product-code, div:last-child .brand {
-        color: lighten($off-black, 50%);
-    }
+    // div:last-child .product-code, div:last-child .brand {
+    //     color: lighten($off-black, 50%);
+    // }
     
-    div:last-child .product-code span, div:last-child .brand span {
-        color: $off-black;
-        font-weight: bold;
-    }
+    // div:last-child .product-code span, div:last-child .brand span {
+    //     color: $off-black;
+    //     font-weight: bold;
+    // }
 
-    .info {
-        border-bottom: 1px solid darken($off-white, 10%);
-        padding-bottom: $normal;
-    }
+    // .info {
+    //     border-bottom: 1px solid darken($off-white, 10%);
+    //     padding-bottom: $normal;
+    // }
 
-    .product-name, .price {
-        font-weight: 600;
-    }
+    // .product-name, .price {
+    //     font-weight: 600;
+    // }
 
-    .quantity {
-        display: flex;
-        justify-content: space-evenly;
-        align-items: center;
-    }
+    // .quantity {
+    //     display: flex;
+    //     justify-content: space-evenly;
+    //     align-items: center;
+    // }
 
-    .show-number {
-        cursor: pointer;
-    }
+    // .show-number {
+    //     cursor: pointer;
+    // }
 
-    .quantity p {
-        font-size: $normal;
-    }   
+    // .quantity p {
+    //     font-size: $normal;
+    // }   
 
-    .quantity div:nth-child(2) {
-        border: 1px solid darken($off-white, 10%);
-        border-radius: 3px;
-        box-shadow: $shadow;
-    }
+    // .quantity div:nth-child(2) {
+    //     border: 1px solid darken($off-white, 10%);
+    //     border-radius: 3px;
+    //     box-shadow: $shadow;
+    // }
 
-    .quantity div:nth-child(2) button {
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
-        font-weight: 600;
-        margin: 0;
-        padding: 2px 11px;
-        transition: 0.3s linear all;
-    }
+    // .quantity div:nth-child(2) button {
+    //     background-color: transparent;
+    //     border: none;
+    //     cursor: pointer;
+    //     font-weight: 600;
+    //     margin: 0;
+    //     padding: 2px 11px;
+    //     transition: 0.3s linear all;
+    // }
 
-    .quantity div:nth-child(2) button:first-child {
-        border-right: 1px solid darken($off-white, 10%);
-    }
+    // .quantity div:nth-child(2) button:first-child {
+    //     border-right: 1px solid darken($off-white, 10%);
+    // }
     
-    .quantity div:nth-child(2) button:last-child {
-        border-left: 1px solid darken($off-white, 10%);
-    }
+    // .quantity div:nth-child(2) button:last-child {
+    //     border-left: 1px solid darken($off-white, 10%);
+    // }
 
-    .quantity div:nth-child(2) span {
-        text-align: center;
-        padding: 0 13px;
-    }
+    // .quantity div:nth-child(2) span {
+    //     text-align: center;
+    //     padding: 0 13px;
+    // }
 
-    .buy-now {
-        display: grid;
-        grid-template-columns: 1.5fr 0.2fr 1fr;
-        column-gap: $sm;
-        margin-bottom: $xs;
-        margin-top: $sm;
-    }
+    // .buy-now {
+    //     display: grid;
+    //     grid-template-columns: 1.5fr 0.2fr 1fr;
+    //     column-gap: $sm;
+    //     margin-bottom: $xs;
+    //     margin-top: $sm;
+    // }
 
-    .buy-now .save {
-        font-size: 0.9rem;
-        margin-top: $normal;
-    }
+    // .buy-now .save {
+    //     font-size: 0.9rem;
+    //     margin-top: $normal;
+    // }
 
-    .buy-now button {
-        border: none;
-        background-color: $green;  
-        border-radius: 3px;
-        font-weight: bold;
-        color: $white; 
-        cursor: pointer;
-        padding-bottom: $normal;
-        padding-top: $normal;
-        transition: 0.3s linear all;
-    }
+    // .buy-now button {
+    //     border: none;
+    //     background-color: $green;  
+    //     border-radius: 3px;
+    //     font-weight: bold;
+    //     color: $white; 
+    //     cursor: pointer;
+    //     padding-bottom: $normal;
+    //     padding-top: $normal;
+    //     transition: 0.3s linear all;
+    // }
 
-    .buy-now button:hover {
-        background-color: darken($green, 5%);
-        box-shadow: $shadow;
-    }
+    // .buy-now button:hover {
+    //     background-color: darken($green, 5%);
+    //     box-shadow: $shadow;
+    // }
 
-    span.mdi.mdi-cards-heart.favourite {
-        background-color: lighten($off-black, 20%);
-        color: $white;
-        cursor: pointer;
-        border-radius: 50%;
-        margin-top: $xs;
-        height: 36px;
-        width: 36px;
-        text-align: center;
-        transition: 0.3s linearr all;
-    }
-    span.mdi.mdi-cards-heart.favourite:hover {
-        background-color: darken($orange, 5%);
-    }
+    // span.mdi.mdi-cards-heart.favourite {
+    //     background-color: lighten($off-black, 20%);
+    //     color: $white;
+    //     cursor: pointer;
+    //     border-radius: 50%;
+    //     margin-top: $xs;
+    //     height: 36px;
+    //     width: 36px;
+    //     text-align: center;
+    //     transition: 0.3s linearr all;
+    // }
+    // span.mdi.mdi-cards-heart.favourite:hover {
+    //     background-color: darken($orange, 5%);
+    // }
 
-    span.mdi.mdi-facebook.share-icon::before, span.mdi.mdi-twitter.share-icon::before, span.mdi.mdi-whatsapp.share-icon::before {
-        border-radius: 50%;
-        cursor: pointer;
-        margin-right: 20px;
-        height: 36px;
-        width: 36px;
-        text-align: center;
-    }
+    // span.mdi.mdi-facebook.share-icon::before, span.mdi.mdi-twitter.share-icon::before, span.mdi.mdi-whatsapp.share-icon::before {
+    //     border-radius: 50%;
+    //     cursor: pointer;
+    //     margin-right: 20px;
+    //     height: 36px;
+    //     width: 36px;
+    //     text-align: center;
+    // }
 
-    span.mdi.mdi-share-variant.share-icon::before {
-        border-radius: 50%;
-        cursor: pointer;
-        margin-right: 20px;
-        height: 36px;
-        width: 36px;
-        text-align: center;
-    }
+    // span.mdi.mdi-share-variant.share-icon::before {
+    //     border-radius: 50%;
+    //     cursor: pointer;
+    //     margin-right: 20px;
+    //     height: 36px;
+    //     width: 36px;
+    //     text-align: center;
+    // }
 
-    .share {
-        padding-bottom: $xxlg;
-    }
+    // .share {
+    //     padding-bottom: $xxlg;
+    // }
 
-    .share .share-icon {
-        color: lighten($off-black, 20%);
-        transition: 0.3s linear all;
-    }
+    // .share .share-icon {
+    //     color: lighten($off-black, 20%);
+    //     transition: 0.3s linear all;
+    // }
 
-    .share .share-icon.facebook:hover {
-        color: #4267B2;
-    }
-    .share .share-icon.twitter:hover {
-        color: #1DA1F2;
-    }
-    .share .share-icon.whatsapp:hover {
-        color: #06D253;
-    }
+    // .share .share-icon.facebook:hover {
+    //     color: #4267B2;
+    // }
+    // .share .share-icon.twitter:hover {
+    //     color: #1DA1F2;
+    // }
+    // .share .share-icon.whatsapp:hover {
+    //     color: #06D253;
+    // }
 
     .sold-by {
         background-color: $off-white;

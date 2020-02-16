@@ -20,11 +20,6 @@ const ViewProduct = (props) => {
             </>
             <section className="view-product">
                 <ProductDetails />
-                <SoldBy />
-                <ProductInfo description={product.description}/>
-                <div className="similar-products">
-
-                </div>
             </section>
         </>
     )

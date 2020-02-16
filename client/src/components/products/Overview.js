@@ -68,7 +68,7 @@ class Overview extends Component {
     }
 
     removeItem = (cartId, productId) => {
-        this.props.removeCartItem(cartId, productId);
+        this.props.removeCartItem(cartId, productId, this.state.user);
     }
 
     goBack = () => {

@@ -36,7 +36,7 @@ router.get('/home', (req, res) => {
     let errors = {};
     Product.find({ enabled: true })
         .sort({ dateAdded: 'desc', test: -1 })
-        .limit(8)
+        .limit(20)
         .exec((err, products) => {
             if (err) {
                 errors.products = 'No Products at this time';

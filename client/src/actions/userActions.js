@@ -7,6 +7,7 @@ import setAuthToken from '../utils/setAuthToken';
 import { addItemsToCart } from './cartActions';
 
 export const loginUser = (user, cart) => (dispatch) => {
+    // console.log(cart);
     dispatch({
         type: GET_ERRORS,
         payload: {}
@@ -23,7 +24,7 @@ export const loginUser = (user, cart) => (dispatch) => {
 
             // Save token to local storage
             const { token } = res.data;
-            
+
             // Set token to local storage
             localStorage.setItem('jwtToken', token);
 
@@ -37,24 +38,23 @@ export const loginUser = (user, cart) => (dispatch) => {
             dispatch(setCurrentUser(decoded));
 
             // addItemsToCart(cart.products, user);
-            const products = cart.products.map(product => {
-                return { product: product._id };
-            });
-            const data = {
-                userID: decoded.id,
-                products
-            };
+            if (cart.products.length > 0) {
+                const products = cart.products.map(product => {
+                    return { product: product.product._id };
+                });
+                const data = {
+                    userID: decoded.id,
+                    products
+                };
 
-            console.log(data.products);
-            if (data.products.length > 0) {
+                console.log(data);
                 axios.post('/api/cart/addItems', data)
                 .then(res => {
-                    console.log(res.data);
+                    // console.log(res.data);
                     // dispatch({
                     //     type: ADD_ITEMS_TO_CART,
                     //     payload: [res.data]
                     // });
-                    console.log(res.data);
                 })
                 .catch(err => console.error(err));
             }
@@ -72,7 +72,7 @@ export const loginUser = (user, cart) => (dispatch) => {
                             payload: error
                         });
                         break;
-    
+
                     default:
                         dispatch({
                             type: GET_ERRORS,
@@ -104,7 +104,7 @@ export const registerUser = (user, history) => (dispatch) => {
                 type: GET_ERRORS,
                 payload: err.response.data
             });
-            
+
         });
 };
 
@@ -117,7 +117,7 @@ export const updateUserData = (userData) => (dispatch) => {
                 const userData = res.data;
                 const token = userData.token;
                 delete userData.token;
-                
+
                 localStorage.setItem('jwtToken', token);
                 setAuthToken(token);
                 const decoded = jwt_decode(token);
@@ -140,7 +140,8 @@ export const updateUserData = (userData) => (dispatch) => {
                 });
             } catch (err) {
                 dispatch({
-                    type: GET_ERRORS
+                    type: GET_ERRORS,
+                    payload: {}
                 });
                 M.toast({
                     html: 'Error! Please retry.',
@@ -155,16 +156,16 @@ export const addAddress = (address) => (dispatch) => {
         .then(res => {
             M.toast({
                 html: 'Address saved successfully',
-                classes: 'toast-valid', 
+                classes: 'toast-valid',
                 displayLength: 3000,
                 completeCallback: () => {
                     if (localStorage.jwtToken) {
                         localStorage.removeItem('jwtToken');
-        
+
                         const userData = res.data;
                         const token = userData.token;
                         delete userData.token;
-                        
+
                         localStorage.setItem('jwtToken', token);
                         setAuthToken(token);
                         const decoded = jwt_decode(token);
@@ -205,7 +206,7 @@ export const removeAddress = (addressId) => (dispatch) => {
                 const userData = res.data;
                 const token = userData.token;
                 delete userData.token;
-                
+
                 localStorage.setItem('jwtToken', token);
                 setAuthToken(token);
                 const decoded = jwt_decode(token);
@@ -213,7 +214,7 @@ export const removeAddress = (addressId) => (dispatch) => {
             }
         })
         .catch(err => console.error(err));
-}; 
+};
 
 export const changePassword = (data) => (dispatch) => {
     axios.put('/api/users/changePassword', data)

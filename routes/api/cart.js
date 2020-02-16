@@ -46,32 +46,34 @@ router.post('/add', passport.authenticate('jwt-user', { session: false }), (req,
 // @access Protected
 router.post('/addItems', passport.authenticate('jwt-user', { session: false }), (req, res) => {
     const { userID, products } = req.body;
+    products.forEach(product => console.log(product));
     Cart.findOne({ user: userID })
         .then(cart => {
             if (cart) {
                 // create new products 
-                let newProducts = products.map(item => {
+                let newProducts = products.map(product => {
                     return {
-                        _id: mongoose.Types.ObjectId(),
-                        product: mongoose.Types.ObjectId(item.product),
-                        quantity: 1
+                        // _id: mongoose.Types.ObjectId(),
+                        product: mongoose.Types.ObjectId(product.product)
+                        // quantity: 1
                     };
                 });
 
                 // compare old cart products with incoming ones before saving to avoid duplicates
+                let itemExists;
                 for (let i = 0; i < newProducts.length; i++ ) {
-                    let itemExists;
+                    itemExists = false;
                     for (let j = 0; j < cart.products.length; j++) {
+                        // check if item in new cart exists on current cart
                         if (Object.is(newProducts[i].product.toString(), cart.products[j].product.toString())) {
                             itemExists = true;
                             break;
-                        } else {
-                            itemExists = false;
                         }
                     }
+
+                    // add item to cart if it does not exist
                     if (itemExists === false) {
                         cart.products.push(newProducts[i]);
-                        itemExists = true;
                     }
                 }
                 cart.save()
@@ -81,8 +83,7 @@ router.post('/addItems', passport.authenticate('jwt-user', { session: false }), 
                     .catch(err => console.error(err));
             } else {
                 // create new cart and append cart items    
-                const cartProducts = products.map(cartItem => ({ product: cartItem.product, quantity: 1 }));
-
+                const cartProducts = products.map(cartItem => ({ product: mongoose.Types.ObjectId(cartItem.product), quantity: 1 }));
                 newCart = new Cart({
                     user: userID,
                     products: cartProducts

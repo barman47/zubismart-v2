@@ -1,15 +1,16 @@
 import { ADD_TO_CART, SET_CART_ITEMS, ADD_ITEMS_TO_CART, SET_PRODUCT_QUANTITY, SET_PRODUCT_QUANTITY_NO_USER } from './types';
 import axios from 'axios';
 import isEmpty from '../validation/is-empty';
-import { FloatingActionButton } from 'materialize-css';
 
 export const addToCart = (item, user) => (dispatch) => {
     if (isEmpty(user)) {
+        console.log('user is empty');
         dispatch({
             type: ADD_TO_CART,
             payload: [item]
         });
     } else {
+        console.log('user is not empty');
         const data = { itemID: item.product._id, userID: user.id }
         axios.post('/api/cart/add', data)
             .then(res => {
@@ -106,11 +107,18 @@ export const getCartItems = (user) => (dispatch) => {
     }
 };
 
-export const removeCartItem = (cartId, productId) => (dispatch) => {
+export const removeCartItem = (cartId, productId, user) => (dispatch) => {
+    console.log(user);
     const data = {
         cartId, productId
     };
-    axios.put(`/api/cart/remove/${cartId}/${productId}`)
+    if (!user.authenticated) {
+        // dispatch({
+        //     type: REMOVE_CART_ITEM,
+        //     payload: data
+        // });
+    } else {
+        axios.put(`/api/cart/remove/${cartId}/${productId}`)
         .then(res => {
             console.log(res.data);
             dispatch({
@@ -119,5 +127,6 @@ export const removeCartItem = (cartId, productId) => (dispatch) => {
             });
         })
         .catch(err => console.error(err))
-    console.log(data);
+        console.log(data);
+    }
 };
